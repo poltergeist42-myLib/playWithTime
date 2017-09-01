@@ -4,7 +4,7 @@ Informations générales playWithTime
 
 :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
 :Projet:             playWithTime
-:dépôt GitHub:       
+:dépôt GitHub:       https://github.com/poltergeist42-myLib/playWithTime.git
 :documentation:      
 :Licence:            CC BY-NC-SA 4.0
 :Liens:              https://creativecommons.org/licenses/by-nc-sa/4.0/

@@ -8,9 +8,10 @@ Welcome to playWithTime's documentation!
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
-
-
+   
+   includeMe
+   playWithTime
+   Bug_ToDoLst
 
 Indices and tables
 ==================

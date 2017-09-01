@@ -27,7 +27,8 @@ if errorlevel 9009 (
 )
 
 %SPHINXBUILD% -M %1 %SOURCEDIR% %BUILDDIR% %SPHINXOPTS%
-rem reconstruction de la branch "gh-pages" et mise a jour du depot distant
+
+REM reconstruction de la branch "gh-pages" et mise a jour du depot distant
 cd %BUILDDIR%\html
 git add .
 git commit -m "rebuilt docs"
