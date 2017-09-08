@@ -68,6 +68,8 @@ Liste de Lib
 
 import time
 
+__all__ = ["C_PlayWithDate"]
+
 class C_PlayWithDate( object ) :
     """ Class permettant d'afficher et de manipuler les dates sous diférents format """
     def __init__( self ) :
@@ -126,7 +128,7 @@ class C_PlayWithDate( object ) :
                                         "27":"27th", "28":"28th",
                                         "29":"29th", "30":"30th",
                                         "31":"31st"
-                                    )
+                                    }
 
     def f_setDateItems( self, v_yy=False, v_mm=False, 
                         v_dd=False, v_month=False, v_weekday=False ) :
@@ -180,7 +182,7 @@ class C_PlayWithDate( object ) :
             * Si l'argument 'v_cutYear' est True, la date sera sur 2 digit
                 
             * Si l'argument 'v_spacer' est utiliser, sa valeur sera utilisée
-            comme spérateur.
+              comme spérateur.
             
             ex : ::
             
@@ -221,7 +223,7 @@ class C_PlayWithDate( object ) :
             * Si l'argument 'v_cutYear' est True, la date sera sur 2 digit
                 
             * Si l'argument 'v_spacer' est utiliser, sa valeur sera utilisée
-            comme spérateur.
+              comme spérateur.
             
             ex : ::
             
@@ -261,7 +263,7 @@ class C_PlayWithDate( object ) :
             * Si l'argument 'v_cutYear' est True, la date sera sur 2 digit
                 
             * Si l'argument 'v_spacer' est utiliser, sa valeur sera utilisée
-            comme spérateur.
+              comme spérateur.
             
             ex : ::
             
@@ -346,7 +348,7 @@ class C_PlayWithDate( object ) :
                                                         self._d_usDayNumber[v_dd], v_yy )
 
         
-    def f_getUsLongForma( Self ) :
+    def f_getUsLongFormat( Self ) :
         """ retourne _v_usLongFormat """
         return self._v_usLongFormat
         

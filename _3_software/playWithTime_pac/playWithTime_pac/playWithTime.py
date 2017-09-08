@@ -11,7 +11,7 @@ Infos
     :dépôt GitHub:       https://github.com/poltergeist42-myLib/playWithTime.git
     :documentation:      https://poltergeist42-mylib.github.io/playWithTime/
     :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-    :Version:            20170904
+    :Version:            20170908
 
 ####
 
@@ -63,6 +63,8 @@ Liste de Lib
 """
 
 import time
+
+__all__ = ["C_PlayWithTime"]
 
 class C_PlayWithTime( object ) :
     """ Class permettant de manipuler des éléments de type duréé """
