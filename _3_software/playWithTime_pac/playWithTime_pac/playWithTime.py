@@ -6,15 +6,17 @@
 Infos
 =====
 
-   :Projet:             playWithTime
-   :Nom du fichier:     playWithTime.py
-   :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20170901
+    :Projet:             playWithTime
+    :Nom du fichier:     playWithTime.py
+    :dépôt GitHub:       https://github.com/poltergeist42-myLib/playWithTime.git
+    :documentation:      https://poltergeist42-mylib.github.io/playWithTime/
+    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
+    :Version:            20170904
 
 ####
 
-   :Licence:            CC-BY-NC-SA
-   :Liens:              https://creativecommons.org/licenses/by-nc-sa/4.0/
+    :Licence:            CC-BY-NC-SA
+    :Liens:              https://creativecommons.org/licenses/by-nc-sa/4.0/
 
 ####
 
@@ -35,14 +37,14 @@ Descriptif
 lexique
 =======
 
-   :**v_**:                 variable
-   :**l_**:                 list
-   :**t_**:                 tuple
-   :**d_**:                 dictionnaire
-   :**f_**:                 fonction
-   :**C_**:                 Class
-   :**i_**:                 Instance
-   :**m_**:                 Matrice
+    :**v_**:                 variable
+    :**l_**:                 list
+    :**t_**:                 tuple
+    :**d_**:                 dictionnaire
+    :**f_**:                 fonction
+    :**C_**:                 Class
+    :**i_**:                 Instance
+    :**m_**:                 Matrice
    
 ####
 
@@ -52,6 +54,11 @@ Référence Web
     * https://docs.python.org/3/library/time.html
     
 ####
+
+Liste de Lib
+============
+
+    * time
 
 """
 

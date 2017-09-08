@@ -1,5 +1,11 @@
 playWithTime
 ============
 
-.. automodule:: _3_software.playWithTime
+.. automodule:: playWithTime_pac.playWithTime
+   :members:
+   
+playWithTime
+============
+
+.. automodule:: playWithTime_pac.playWithDate
    :members:
