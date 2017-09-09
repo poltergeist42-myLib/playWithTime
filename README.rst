@@ -17,6 +17,17 @@ Déscription
     * Temps écoulé entre deux référence de temps
     * Manipulation du format d'affichage des dates
 
+Installation
+============
+
+ Depuis une invite de commande, ce placer dans le dossier "_3_software\playWithTime_pac" puis
+ excuter la commande setup : ::
+ 
+    cd .\_3_software\playWithTime_pac
+    python setup.py install
+    
+**N.B** : vous devez être Root / administrateur pour effectuer cette opération.
+    
 Arborescence du projet
 ======================
 

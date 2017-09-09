@@ -11,7 +11,7 @@ Infos
     :dépôt GitHub:       https://github.com/poltergeist42-myLib/playWithTime.git
     :documentation:      https://poltergeist42-mylib.github.io/playWithTime/
     :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-    :Version:            20170908
+    :Version:            20170909
 
 ####
 
@@ -162,7 +162,7 @@ class C_PlayWithDate( object ) :
         if v_weekday :
             self._v_weekday = v_weekday
         else :
-            self.v_weekday = time.strftime( "%A" )
+            self._v_weekday = time.strftime( "%A" )
         
         
     def f_getDateItems( self ) :
@@ -213,6 +213,9 @@ class C_PlayWithDate( object ) :
         
     def f_getReverseShortFormat( self ) :
         """ retourne '_v_reverseShortFormat' """
+        if not self._v_reverseShortFormat :
+            self.f_setReverseShortFormat()
+            
         return self._v_reverseShortFormat
         
 
@@ -253,6 +256,9 @@ class C_PlayWithDate( object ) :
         
     def f_getFrShortFormat( self ) :
         """ retourne '_v_frShortFormat' """
+        if not self._v_frShortFormat :
+            self.f_setFrShortFormat()
+            
         return self._v_frShortFormat
         
 
@@ -293,6 +299,9 @@ class C_PlayWithDate( object ) :
 
     def f_getUsShortFormat( self, v_cutYear = False, v_spacer = False ) :
         """ retourne '_v_usShortFormat' """
+        if not self._v_usShortFormat :
+            self.f_setUsShortFormat()
+            
         return self._v_usShortFormat
         
         
@@ -321,6 +330,9 @@ class C_PlayWithDate( object ) :
         
     def f_getFrLongFormat( self ) :
         """ retourne _v_frLongFormat """
+        if not self._v_frLongFormat :
+            self.f_setFrLongFormat()
+            
         return self._v_frLongFormat
 
 
@@ -341,15 +353,18 @@ class C_PlayWithDate( object ) :
         v_yy, _, v_dd, v_month, v_weekday = self.f_getDateItems()
         
         if not v_wDay :
-            self._v_frLongFormat = "{} {} {}".format(   v_month,
+            self._v_usLongFormat = "{} {} {}".format(   v_month,
                                                         self._d_usDayNumber[v_dd], v_yy )
         else :
-            self._v_frLongFormat = "{}, {} {} {}".format(v_weekday, v_month,
+            self._v_usLongFormat = "{}, {} {} {}".format(v_weekday, v_month,
                                                         self._d_usDayNumber[v_dd], v_yy )
 
         
-    def f_getUsLongFormat( Self ) :
+    def f_getUsLongFormat( self ) :
         """ retourne _v_usLongFormat """
+        if not self._v_usLongFormat :
+            self.f_setUsLongFormat()
+            
         return self._v_usLongFormat
         
         
@@ -357,6 +372,30 @@ class C_PlayWithDate( object ) :
     
 def main() :
     """ fonction principale, permtet de tester la librairie """
+    ist = C_PlayWithDate()
+    l_getList = []
+    l_getList.append( ist.f_getDateItems() )
+    l_getList.append( ist.f_getReverseShortFormat() )
+    l_getList.append( ist.f_getFrShortFormat() )
+    l_getList.append( ist.f_getUsShortFormat() )
+    l_getList.append( ist.f_getFrLongFormat() )
+    l_getList.append( ist.f_getUsLongFormat() )
+    ist.f_setReverseShortFormat(True, '/')
+    l_getList.append( ist.f_getReverseShortFormat() )
+    ist.f_setFrShortFormat( True, '/' )
+    l_getList.append( ist.f_getFrShortFormat() )
+    ist.f_setUsShortFormat( True, '/')
+    l_getList.append( ist.f_getUsShortFormat() )
+    ist.f_setFrLongFormat( True )
+    l_getList.append( ist.f_getFrLongFormat() )
+    ist.f_setUsLongFormat( True )
+    l_getList.append( ist.f_getUsLongFormat() )
+    ist.f_setDateItems( "2017", "09", "08", "September", "Friday" )
+    l_getList.append( ist.f_getDateItems() )
+    
+    for i in l_getList :
+        print( i )
+
     
 if __name__ == '__main__':
     main()

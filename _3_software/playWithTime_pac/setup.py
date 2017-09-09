@@ -11,17 +11,17 @@ from setuptools import setup, find_packages
  
 # notez qu'on import la lib
 # donc assurez-vous que l'importe n'a pas d'effet de bord
-import devchk_pac
+import playWithTime_pac
  
 # Ceci n'est qu'un appel de fonction. Mais il est trèèèèèèèèèèès long
 # et il comporte beaucoup de paramètres
 setup(
  
     # le nom de votre bibliothèque, tel qu'il apparaitre sur pypi
-    name='devchk_pac',
+    name='playWithTime_pac',
  
     # la version du code
-    version=devchk_pac.__version__,
+    version=playWithTime_pac.__version__,
  
     # Liste les packages à insérer dans la distribution
     # plutôt que de le faire à la main, on utilise la foncton
@@ -59,7 +59,7 @@ setup(
     include_package_data=True,
  
     # Une url qui pointe vers la page officielle de votre lib
-    url='https://github.com/poltergeist42-myLib/devChk',
+    url='https://poltergeist42-mylib.github.io/playWithTime/',
  
     # Il est d'usage de mettre quelques metadata à propos de sa lib
     # Pour que les robots puissent facilement la classer.
