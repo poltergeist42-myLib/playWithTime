@@ -11,7 +11,7 @@ Infos
     :dépôt GitHub:       https://github.com/poltergeist42-myLib/playWithTime.git
     :documentation:      https://poltergeist42-mylib.github.io/playWithTime/
     :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-    :Version:            20170909
+    :Version:            20170913
 
 ####
 
@@ -72,9 +72,9 @@ class C_PlayWithTime( object ) :
     def __init__( self ) :
     
         ## Variables Epoch : utilisées par time.time()
-        self._v_epochRefPrev            = 0
-        self._v_epochRefNow             = 0
-        slef._v_epochDiff               = 0
+        self._v_epochRefPrev            = 0.0
+        self._v_epochRefNow             = 0.0
+        self._v_epochDiff               = 0.0
         
         ## Variables Clock : utilisées par time.clock()
         self._v_clkRefPrev              = 0.0
@@ -82,17 +82,24 @@ class C_PlayWithTime( object ) :
         self._v_clkRefDiff              = 0.0
         
         ## fomrat compréhensible des données
-        self._v_understandingBaseTime   = "epoch"
+        self._v_understandingBaseTime   = ""
         self._v_understandingRefPrev    = ""
         self._v_understandingRefNow     = ""
         self._v_understandingRefDiff    = ""
+        
+
+    def f_setEpochRAZ(self ) :
+        """ Remet toutes les variables 'Epoch' à zéro """
+        self._v_epochRefPrev    = 0.0
+        self._v_epochRefNow     = 0.0
+        self._v_epochDiff       = 0.0
         
         
     def f_setEpochRefPrev( self, v_epochRefPrev=False ) :
         """ Définit la variable  '_v_epochRefPrev'. C'est la référence de temps 
             la plus anciennne
         """
-        if not sv_epochRefPrev :
+        if not v_epochRefPrev :
             self._v_epochRefPrev = self.f_getEpochRefNow()
         else :
             self._v_epochRefPrev = v_epochRefPrev
@@ -153,9 +160,17 @@ class C_PlayWithTime( object ) :
         """
         return (self.f_getEpochRefPrev(), 
                 self.f_getEpochRefNow(),
-                self.f_getEpochRefDiff)
+                self.f_getEpochRefDiff()
+                )
 
+                
+    def f_setClkRAZ(self ) :
+        """ Remet toutes les variables 'Clk' à zéro """
+        self._v_clkRefPrev    = 0.0
+        self._v_clkRefNow     = 0.0
+        self._v_clfDiff       = 0.0
         
+
     def f_setClkRefPrev( self, v_clkRefPrev=False ) :
         """ Définit la variable  '_v_clkRefPrev'. C'est la référence de temps 
             la plus anciennne (en temp CPU depuis le début du process)
@@ -219,22 +234,37 @@ class C_PlayWithTime( object ) :
         """
         return (self.f_getClkRefPrev(), 
                 self.f_getClkRefNow(),
-                self.f_getClkRefDiff)
+                self.f_getClkRefDiff()
+                )
         
         
-    def f_setUnderstandingBaseTime( self, v_timeType )
+    def f_setUnderstandingRAZ( self ) :
+        """ Remet toutes les variables 'Understanding' à zéro ("") """
+        self._v_understandingBaseTime   = ""
+        self._v_understandingRefPrev    = ""
+        self._v_understandingRefNow     = ""
+        self._v_understandingRefDiff    = ""
+        
+        
+    def f_setUnderstandingBaseTime( self, v_timeType=False ) :
         """ Définit la variable '_v_understandingBaseTime'' qui permet au méthode
             'understanding' d'utiliser une base de temps de type 'epoch' ou clk'
         """
+        if not v_timeType :
+            v_timeType = "epoch"
+        
         v_timeType = v_timeType.lower()
         if v_timeType == "epoch" :
             self._v_understandingBaseTime = "Epoch"
         elif v_timeType == "clk" :
             self._v_understandingBaseTime = "Clk"
-            
+        
             
     def f_getUnderstandingBaseTime( self ) :
         """ retourne '_v_understandingBaseTime' """
+        if not self._v_understandingBaseTime :
+            self.f_setUnderstandingBaseTime()
+            
         return self._v_understandingBaseTime
         
         
@@ -337,12 +367,12 @@ class C_PlayWithTime( object ) :
         return self._v_understandingRefDiff
     
     
-    def f_setUnderstandingRefFifo( self ) :
+    def f_setUnderstandingFiFo( self ) :
         """ First_In, First_Out. Copie '_v_understandingRefNow' dans
             '_v_understandingRefPrev' et '_v_understandingRefNow' prend une nouvelle valeur. La différence entre entre Pev et Now est calculée automatiquement avant chaque mouvement.
         """
         v_baseTime = self.f_getUnderstandingBaseTime()
-        v_evalSetFn = "self.f_set{}RefFifo".format( v_baseTime )
+        v_evalSetFn = "self.f_set{}FiFo".format( v_baseTime )
         eval( v_evalSetFn )()
         
         self.f_setUnderstandingRefDiff()
@@ -356,15 +386,57 @@ class C_PlayWithTime( object ) :
         """
         return (self.f_getUnderstandingRefPrev(), 
                 self.f_getUnderstandingRefNow(),
-                self.f_getUnderstandingRefDiff)
+                self.f_getUnderstandingRefDiff()
+                )
 
     
 ####
     
 def main() :
     """ fonction principale, permtet de tester la librairie """
+    v_boucle = 3
+    v_sleep = 1
+    
     ist=C_PlayWithTime()
     
+    ist.f_setEpochRAZ()
+    ist.f_setClkRAZ()
+    ist.f_setUnderstandingRAZ()
+    
+    print( "\nEpoch" )
+    for i in range( v_boucle ) :
+        ist.f_setEpochFiFo()
+        for j in ist.f_getEpochPrevNowDiff() :
+            print( j )
+            
+        print( "\n" )
+        time.sleep( v_sleep )
+            
+    ist.f_setEpochRAZ()
+    ist.f_setClkRAZ()
+    ist.f_setUnderstandingRAZ()
+    
+    print( "\nClk" )
+    for i in range( v_boucle ) :
+        ist.f_setClkFiFo()
+        for j in ist.f_getClkPrevNowDiff() :
+            print( j )
+
+        print( "\n" )
+        time.sleep( v_sleep )
+        
+    ist.f_setEpochRAZ()
+    ist.f_setClkRAZ()
+    ist.f_setUnderstandingRAZ()
+    
+    print( "\nUnderstanding" )
+    for i in range( v_boucle ) :
+        ist.f_setUnderstandingFiFo()
+        for j in ist.f_getUnderstandingPrevNowDiff() :
+            print( j )
+            
+        print( "\n" )
+        time.sleep( v_sleep )
     
 if __name__ == '__main__':
     main()
