@@ -45,10 +45,25 @@ Bug identifiés
 ToDo-list
 =========
 
-    :Date de saisie:        
+    :Date de saisie:        20170918
     :Date de traitemant:    
-    :Cible:                 [userDoc, modelisation, software, PCB, autre]
-    :Status:                
-    :Problematique:         
-    :Traitement:            
+    :Cible:                 software
+    :Status:                20170919
+    :Problematique:         Créer les set/get 'UnderstandingRefRoundDiff' L'objectif est
+                            d'arrondir au quart d'heure près la différence de temps calculée.
+    :Traitement:            création des get/set UnderstandingRound
+    
+------------------------------------------------------------------------------------------
+
+ToDo-list
+=========
+
+    :Date de saisie:        20170918
+    :Date de traitemant:    20170919
+    :Cible:                 software
+    :Status:                None
+    :Problematique:         Créer les set/get 'round' L'objectif est
+                            d'arrondir au quart d'heure près les valeur passées en
+                            argument et retourner une valeur Compréhensible.
+    :Traitement:            création des get/set UnderstandingRound
 

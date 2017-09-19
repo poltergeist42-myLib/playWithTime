@@ -10,8 +10,8 @@ Infos
     :Nom du fichier:     playWithTime.py
     :dépôt GitHub:       https://github.com/poltergeist42-myLib/playWithTime.git
     :documentation:      https://poltergeist42-mylib.github.io/playWithTime/
-    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-    :Version:            20170913
+    :Auteur:            `Poltergeist42 <https://github.com/poltergeist42>`_
+    :Version:            20170919
 
 ####
 
@@ -72,183 +72,185 @@ class C_PlayWithTime( object ) :
     def __init__( self ) :
     
         ## Variables Epoch : utilisées par time.time()
-        self._v_epochRefPrev            = 0.0
-        self._v_epochRefNow             = 0.0
-        self._v_epochDiff               = 0.0
+        self._v_epochPrev                = 0.0
+        self._v_epochNow                 = 0.0
+        self._v_epochDiff                   = 0.0
         
         ## Variables Clock : utilisées par time.clock()
-        self._v_clkRefPrev              = 0.0
-        self._v_clkRefNow               = 0.0
-        self._v_clkRefDiff              = 0.0
+        self._v_clkPrev                  = 0.0
+        self._v_clkNow                   = 0.0
+        self._v_clkDiff                     = 0.0
         
         ## fomrat compréhensible des données
-        self._v_understandingBaseTime   = ""
-        self._v_understandingRefPrev    = ""
-        self._v_understandingRefNow     = ""
-        self._v_understandingRefDiff    = ""
+        self._v_understandingBaseTime       = ""
+        self._v_understandingPrev        = ""
+        self._v_understandingNow         = ""
+        self._v_understandingDiff           = ""
+        self._v_understandingRound   = ""
         
 
     def f_setEpochRAZ(self ) :
         """ Remet toutes les variables 'Epoch' à zéro """
-        self._v_epochRefPrev    = 0.0
-        self._v_epochRefNow     = 0.0
-        self._v_epochDiff       = 0.0
+        self._v_epochPrev   = 0.0
+        self._v_epochNow    = 0.0
+        self._v_epochDiff   = 0.0
         
         
-    def f_setEpochRefPrev( self, v_epochRefPrev=False ) :
-        """ Définit la variable  '_v_epochRefPrev'. C'est la référence de temps 
+    def f_setEpochPrev( self, v_epochPrev=False ) :
+        """ Définit la variable  '_v_epochPrev'. C'est la référence de temps 
             la plus anciennne
         """
-        if not v_epochRefPrev :
-            self._v_epochRefPrev = self.f_getEpochRefNow()
+        if not v_epochPrev :
+            self._v_epochPrev = self.f_getEpochNow()
         else :
-            self._v_epochRefPrev = v_epochRefPrev
+            self._v_epochPrev = v_epochPrev
         
         
-    def f_getEpochRefPrev( self ) :
-        """ Retourne '_v_epochRefPrev' """
-        if not self._v_epochRefPrev :
-            self.f_setEpochRefPrev()
+    def f_getEpochPrev( self ) :
+        """ Retourne '_v_epochPrev' """
+        if not self._v_epochPrev :
+            self.f_setEpochPrev()
             
-        return self._v_epochRefPrev
+        return self._v_epochPrev
         
         
-    def f_setEpochRefNow( self ) :
-        """ Définit la variable  '_v_epochRefNow'. C'est  la référence de temps
+    def f_setEpochNow( self ) :
+        """ Définit la variable  '_v_epochNow'. C'est  la référence de temps
             la plus récente
         """
-        self._v_epochRefNow = time.time()
-        if not self.f_getEpochRefPrev() :
-            self.f_setEpochRefPrev(self._v_epochRefNow)
+        self._v_epochNow = time.time()
+        if not self.f_getEpochPrev() :
+            self.f_setEpochPrev(self._v_epochNow)
         
         
-    def f_getEpochRefNow( self ) :
-        """ Retourne '_v_epochRefNow' """
-        if not self._v_epochRefNow :
-            self.f_setEpochRefNow()
+    def f_getEpochNow( self ) :
+        """ Retourne '_v_epochNow' """
+        if not self._v_epochNow :
+            self.f_setEpochNow()
             
-        return self._v_epochRefNow
+        return self._v_epochNow
         
         
-    def f_setEpochRefDiff( self ) :
+    def f_setEpochDiff( self ) :
         """ Définit la variable  _v_epochDiff. c'est le resultat de 
-            '_v_epochRefNow' - '_v_epochRefPrev'
+            '_v_epochNow' - '_v_epochPrev'
         """
-        self._v_epochDiff = self.f_getEpochRefNow()-self.f_getEpochRefPrev()
+        self._v_epochDiff = self.f_getEpochNow()-self.f_getEpochPrev()
         
         
-    def f_getEpochRefDiff( self ) :
+    def f_getEpochDiff( self ) :
         """ Retourne '_v_epochDiff' """
         if not self._v_epochDiff :
-            self.f_setEpochRefDiff()
+            self.f_setEpochDiff()
             
         return self._v_epochDiff
         
         
     def f_setEpochFiFo( self ) :
-        """ First_In, First_Out. Copie '_v_epochRefNow' dans '_v_epochRefPrev' et
-            '_v_epochRefNow' prend une nouvelle valeur. La différence entre entre Pev et Now est calculée automatiquement avant chaque mouvement.
+        """ First_In, First_Out. Copie '_v_epochNow' dans '_v_epochPrev' et
+            '_v_epochNow' prend une nouvelle valeur. La différence entre entre Pev et Now est calculée automatiquement avant chaque mouvement.
         """
-        self.f_setEpochRefDiff()
-        self.f_setEpochRefPrev( self.f_getEpochRefNow() )
-        self.f_setEpochRefNow()
+        self.f_setEpochDiff()
+        self.f_setEpochPrev( self.f_getEpochNow() )
+        self.f_setEpochNow()
         
         
     def f_getEpochPrevNowDiff( self ) :
-        """ Retourne un tuple avec '_v_epochRefPrev', '_v_epochRefNow'
+        """ Retourne un tuple avec '_v_epochPrev', '_v_epochNow'
             et '_v_epochDiff'
         """
-        return (self.f_getEpochRefPrev(), 
-                self.f_getEpochRefNow(),
-                self.f_getEpochRefDiff()
+        return (self.f_getEpochPrev(), 
+                self.f_getEpochNow(),
+                self.f_getEpochDiff()
                 )
 
                 
     def f_setClkRAZ(self ) :
         """ Remet toutes les variables 'Clk' à zéro """
-        self._v_clkRefPrev    = 0.0
-        self._v_clkRefNow     = 0.0
-        self._v_clfDiff       = 0.0
+        self._v_clkPrev = 0.0
+        self._v_clkNow  = 0.0
+        self._v_clfDiff = 0.0
         
 
-    def f_setClkRefPrev( self, v_clkRefPrev=False ) :
-        """ Définit la variable  '_v_clkRefPrev'. C'est la référence de temps 
+    def f_setClkPrev( self, v_clkPrev=False ) :
+        """ Définit la variable  '_v_clkPrev'. C'est la référence de temps 
             la plus anciennne (en temp CPU depuis le début du process)
         """
-        if not v_clkRefPrev :
-            self._v_clkRefPrev = self.f_getClkRefNow()
+        if not v_clkPrev :
+            self._v_clkPrev = self.f_getClkNow()
         else :
-            self._v_clkRefPrev = v_clkRefPrev
+            self._v_clkPrev = v_clkPrev
         
         
-    def f_getClkRefPrev( self ) :
-        """ Retourne '_v_clkRefPrev' """
-        if not self._v_clkRefPrev :
-            self.f_setClkRefPrev()
+    def f_getClkPrev( self ) :
+        """ Retourne '_v_clkPrev' """
+        if not self._v_clkPrev :
+            self.f_setClkPrev()
             
-        return self._v_clkRefPrev
+        return self._v_clkPrev
         
         
-    def f_setClkRefNow( self ) :
-        """ Définit la variable  '_v_clkRefNow'. C'est  la référence de temps
+    def f_setClkNow( self ) :
+        """ Définit la variable  '_v_clkNow'. C'est  la référence de temps
             la plus récente (en temp CPU depuis le début du process)
         """
-        self._v_clkRefNow = time.time()
+        self._v_clkNow = time.time()
  
         
-    def f_getClkRefNow( self ) :
-        """ Retourne '_v_clkRefNow' """
-        if not self._v_clkRefNow :
-            self.f_setClkRefNow()
+    def f_getClkNow( self ) :
+        """ Retourne '_v_clkNow' """
+        if not self._v_clkNow :
+            self.f_setClkNow()
             
-        return self._v_clkRefNow
+        return self._v_clkNow
         
         
-    def f_setClkRefDiff( self ) :
-        """ Définit la variable  _v_clkRefDiff. c'est le resultat de 
-            '_v_clkRefNow' - '_v_clkRefPrev'
+    def f_setClkDiff( self ) :
+        """ Définit la variable  _v_clkDiff. c'est le resultat de 
+            '_v_clkNow' - '_v_clkPrev'
         """
-        self._v_clkDiff = self.f_getClkRefNow()-self.f_getClkRefPrev()
+        self._v_clkDiff = self.f_getClkNow()-self.f_getClkPrev()
         
         
-    def f_getClkRefDiff( self ) :
+    def f_getClkDiff( self ) :
         """ Retourne '_v_clkDiff' """
         if not self._v_clkDiff :
-            self.f_setClkRefDiff()
+            self.f_setClkDiff()
             
         return self._v_clkDiff
         
         
     def f_setClkFiFo( self ) :
-        """ First_In, First_Out. Copie '_v_clkRefNow' dans '_v_clkRefPrev' et
-            '_v_clkRefNow' prend une nouvelle valeur  (en temp CPU depuis le début du
+        """ First_In, First_Out. Copie '_v_clkNow' dans '_v_clkPrev' et
+            '_v_clkNow' prend une nouvelle valeur  (en temp CPU depuis le début du
             process). La différence entre entre Pev et Now est calculée automatiquement avant chaque mouvement.
         """
-        self.f_setClkRefDiff()
-        self.f_setClkRefPrev( self.f_getClkRefNow() )
-        self.f_setClkRefNow()
+        self.f_setClkDiff()
+        self.f_setClkPrev( self.f_getClkNow() )
+        self.f_setClkNow()
         
     def f_getClkPrevNowDiff( self ) :
-        """ Retourne un tuple avec '_v_ClkRefPrev', '_v_ClkRefNow'
+        """ Retourne un tuple avec '_v_ClkPrev', '_v_ClkNow'
             et '_v_ClkDiff'
         """
-        return (self.f_getClkRefPrev(), 
-                self.f_getClkRefNow(),
-                self.f_getClkRefDiff()
+        return (self.f_getClkPrev(), 
+                self.f_getClkNow(),
+                self.f_getClkDiff()
                 )
         
         
     def f_setUnderstandingRAZ( self ) :
         """ Remet toutes les variables 'Understanding' à zéro ("") """
         self._v_understandingBaseTime   = ""
-        self._v_understandingRefPrev    = ""
-        self._v_understandingRefNow     = ""
-        self._v_understandingRefDiff    = ""
-        
+        self._v_understandingPrev       = ""
+        self._v_understandingNow        = ""
+        self._v_understandingDiff       = ""
+        self._v_understandingRound  = ""
         
     def f_setUnderstandingBaseTime( self, v_timeType=False ) :
-        """ Définit la variable '_v_understandingBaseTime'' qui permet au méthode
-            'understanding' d'utiliser une base de temps de type 'epoch' ou clk'
+        """ Définit la variable '_v_understandingBaseTime'' qui permet à la méthode
+            'understanding' d'utiliser une base de temps de type 'epoch' ou clk'.
+            La valeur par défaut est "epoch".
         """
         if not v_timeType :
             v_timeType = "epoch"
@@ -268,62 +270,62 @@ class C_PlayWithTime( object ) :
         return self._v_understandingBaseTime
         
         
-    def f_setUnderstandingRefPrev( self, v_uRefPrev=False ) :
-        """ Définit la variable '_v_understandingRefPrev' dans un format comprehensible
+    def f_setUnderstandingPrev( self, v_uPrev=False ) :
+        """ Définit la variable '_v_understandingPrev' dans un format comprehensible
             sous la forme : str( xxh xxm xxs )
         """
         v_baseTime = self.f_getUnderstandingBaseTime()
-        v_evalSetFn = "self.f_set{}RefPrev".format( v_baseTime )
+        v_evalSetFn = "self.f_set{}Prev".format( v_baseTime )
         eval( v_evalSetFn )()
         
-        if not v_uRefPrev :
-            self._v_understandingRefPrev = self.f_getUnderstandingRefNow()
+        if not v_uPrev :
+            self._v_understandingPrev = self.f_getUnderstandingNow()
         else :
-            self._v_understandingRefPrev = v_uRefPrev
+            self._v_understandingPrev = v_uPrev
         
         
-    def f_getUnderstandingRefPrev( self ) :
-        """ Retourne '_v_understandingRefPrev' """
-        if not self._v_understandingRefPrev :
-            self.f_setUnderstandingRefPrev()
+    def f_getUnderstandingPrev( self ) :
+        """ Retourne '_v_understandingPrev' """
+        if not self._v_understandingPrev :
+            self.f_setUnderstandingPrev()
             
-        return self._v_understandingRefPrev
+        return self._v_understandingPrev
         
         
-    def f_setUnderstandingRefNow( self ) :
-        """ Définit la variable '_v_understandingRefNow' dans un format comprehensible
+    def f_setUnderstandingNow( self ) :
+        """ Définit la variable '_v_understandingNow' dans un format comprehensible
             sous la forme : str( xxh xxm xxs )
         """
         v_baseTime = self.f_getUnderstandingBaseTime()
-        v_evalSetFn = "self.f_set{}RefNow".format( v_baseTime )
+        v_evalSetFn = "self.f_set{}Now".format( v_baseTime )
         eval( v_evalSetFn )()
         
-        self._v_understandingRefNow = time.strftime('%H:%M:%S')
+        self._v_understandingNow = time.strftime('%H:%M:%S')
  
             
-    def f_getUnderstandingRefNow( self ) :
-        """ Retourne '_v_understandingRefNow' """
-        if not self._v_understandingRefNow :
-            self.f_setUnderstandingRefNow
+    def f_getUnderstandingNow( self ) :
+        """ Retourne '_v_understandingNow' """
+        if not self._v_understandingNow :
+            self.f_setUnderstandingNow
             
-        return self._v_understandingRefNow
+        return self._v_understandingNow
     
     
-    def f_setUnderstandingRefDiff( self ) :
-        """ Définit la variable '_v_understandingRefDiff' dans un format comprehensible
+    def f_setUnderstandingDiff( self ) :
+        """ Définit la variable '_v_understandingDiff' dans un format comprehensible
             sous la forme : str( xxh xxm xxs )
         """
         v_DeltaFinal = ""
         
         v_baseTime = self.f_getUnderstandingBaseTime()
-        v_evalSetFn = "self.f_set{}RefDiff".format( v_baseTime )
+        v_evalSetFn = "self.f_set{}Diff".format( v_baseTime )
         eval( v_evalSetFn )()
         
-        v_evalGetFn = "self.f_get{}RefDiff".format( v_baseTime )
-        v_uRefDiff = eval( v_evalGetFn )()
+        v_evalGetFn = "self.f_get{}Diff".format( v_baseTime )
+        v_uDiff = eval( v_evalGetFn )()
         
         ## Formatage des heures
-        v_IntH = v_uRefDiff // 3600
+        v_IntH = v_uDiff // 3600
         if v_IntH :
             v_toStr = str(v_IntH)
             if len( v_toStr ) < 2 :
@@ -334,7 +336,7 @@ class C_PlayWithTime( object ) :
             v_DeltaFinal = "00h "
             
         ## Formatage des minutes
-        v_ModH = v_uRefDiff%3600
+        v_ModH = v_uDiff%3600
         v_IntM = v_ModH // 60
         if v_IntM :
             v_toStr = str(v_IntM)
@@ -356,37 +358,98 @@ class C_PlayWithTime( object ) :
         else :
             v_DeltaFinal += "00s"
             
-        self._v_understandingRefDiff = v_DeltaFinal
+        self._v_understandingDiff = v_DeltaFinal
     
     
-    def f_getUnderstandingRefDiff( self ) :
-        """ retourne '_v_understandingRefDiff' """
-        if not self._v_understandingRefDiff :
-            self.f_setUnderstandingRefDiff()
+    def f_getUnderstandingDiff( self ) :
+        """ retourne '_v_understandingDiff' """
+        if not self._v_understandingDiff :
+            self.f_setUnderstandingDiff()
             
-        return self._v_understandingRefDiff
+        return self._v_understandingDiff
+        
+        
+    def f_setUnderstandingRound( self,  v_num=False) :
+        """ Définit la variable '_v_understandingRound' dans un format comprehensible
+            sous la forme : str( xxh xxm xxs ). Cette variable est une valeur arondie
+            au quart d'heure près.
+            **N.B : Si la différence de temps est comprise entre 15 et 20 minute, 
+            l'arondie sera soit 1 quart d'heure, soit 1 tier.
+        """
+        v_DeltaFinal = ""
+        if not v_num :
+            v_baseTime = self.f_getUnderstandingBaseTime()
+            v_evalSetFn = "self.f_set{}Diff".format( v_baseTime )
+            eval( v_evalSetFn )()
+            
+            v_evalGetFn = "self.f_get{}Diff".format( v_baseTime )
+            v_num = eval( v_evalGetFn )()
+        
+        v_IntH = v_num // 3600
+        v_ModH = v_num%3600
+        v_IntM = v_ModH // 60
+        
+        if not v_IntH :
+            if (v_IntM < 20) and (v_IntM > 15) :
+                if v_ModH > 17.5 :
+                    v_DeltaFinal = "00h20m"
+                else :
+                    v_DeltaFinal = "00h15m"
+        
+                self._v_understandingRound = v_DeltaFinal
+                break
+        
+        if v_IntM :
+            if v_IntM <= 22.5 :
+                v_strM = "15m"
+                
+            elif (v_IntM >= 22.5) and (v_IntM <= 37.5) :
+                v_strM = "30m"
+            
+            elif (v_IntM >= 37.5) and (v_IntM <= 52.5) :
+                v_IntM = "45m"
+                
+            elif v_IntM >= 52.5 :
+                v_strM  = "00m"
+                v_IntH += 1
+            
+        if v_IntH :
+            v_toStr = str(v_IntH)
+            if len( v_toStr ) < 2 :
+                v_DeltaFinal = '0' + v_toStr + "h "
+            else :
+                v_DeltaFinal = v_toStr + "h "
+        else :
+            v_DeltaFinal = "00h "
+            
+        v_DeltaFinal += v_strM          
+        self._v_understandingRound = v_DeltaFinal
     
+    
+    def f_getUnderstandingRound( self ) :
+        """ retourne '_v_understandingRound' """
+        return self._v_understandingRound
     
     def f_setUnderstandingFiFo( self ) :
-        """ First_In, First_Out. Copie '_v_understandingRefNow' dans
-            '_v_understandingRefPrev' et '_v_understandingRefNow' prend une nouvelle valeur. La différence entre entre Pev et Now est calculée automatiquement avant chaque mouvement.
+        """ First_In, First_Out. Copie '_v_understandingNow' dans
+            '_v_understandingPrev' et '_v_understandingNow' prend une nouvelle valeur. La différence entre entre Pev et Now est calculée automatiquement avant chaque mouvement.
         """
         v_baseTime = self.f_getUnderstandingBaseTime()
         v_evalSetFn = "self.f_set{}FiFo".format( v_baseTime )
         eval( v_evalSetFn )()
         
-        self.f_setUnderstandingRefDiff()
-        self.f_setUnderstandingRefPrev( self.f_getUnderstandingRefNow() )
-        self.f_setUnderstandingRefNow()
+        self.f_setUnderstandingDiff()
+        self.f_setUnderstandingPrev( self.f_getUnderstandingNow() )
+        self.f_setUnderstandingNow()
         
         
     def f_getUnderstandingPrevNowDiff( self ) :
-        """ Retourne un tuple avec '_v_UnderstandingRefPrev', '_v_UnderstandingRefNow'
+        """ Retourne un tuple avec '_v_UnderstandingPrev', '_v_UnderstandingNow'
             et '_v_UnderstandingDiff'
         """
-        return (self.f_getUnderstandingRefPrev(), 
-                self.f_getUnderstandingRefNow(),
-                self.f_getUnderstandingRefDiff()
+        return (self.f_getUnderstandingPrev(), 
+                self.f_getUnderstandingNow(),
+                self.f_getUnderstandingDiff()
                 )
 
     

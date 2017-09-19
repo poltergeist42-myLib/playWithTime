@@ -10,6 +10,7 @@ oldLibVers*/
 */build
 */dist
 */*.egg-info
+*__pycache__*
 
 ## [ listes des extentions a ignorer ]
 *.FCStd1

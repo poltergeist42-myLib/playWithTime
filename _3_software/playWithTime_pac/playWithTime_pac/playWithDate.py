@@ -11,7 +11,7 @@ Infos
     :dépôt GitHub:       https://github.com/poltergeist42-myLib/playWithTime.git
     :documentation:      https://poltergeist42-mylib.github.io/playWithTime/
     :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-    :Version:            20170909
+    :Version:            20170913
 
 ####
 
@@ -177,6 +177,7 @@ class C_PlayWithDate( object ) :
     def f_setReverseShortFormat( self, v_cutYear = False, v_spacer = False) :
         """ Permet de definir la variable '_v_reverseShortFormat' sous la forme
             d'une str :
+            
                 'YYYYMMDD'
                 
             * Si l'argument 'v_cutYear' est True, la date sera sur 2 digit

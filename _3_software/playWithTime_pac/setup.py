@@ -39,7 +39,7 @@ setup(
     # author_email="",
  
     # Une description courte
-    description="Cette Lib ne fait rien, elle n'existe que pour faire des testes",
+    description="Cette Lib permet de manipuler des éléments de temps (dates et heures)",
  
     # Une description longue, sera affichée pour présenter la lib
     # Généralement on dump le README ici
@@ -74,7 +74,7 @@ setup(
         # "License :: OSI Approved",
         "Natural Language :: French",
         "Operating System :: OS Independent",
-        "Programming Language :: Python :: 3.4",
+        "Programming Language :: Python :: 3.6",
         # "Topic :: Communications",
     ],
  

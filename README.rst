@@ -9,6 +9,8 @@ Informations générales playWithTime
 :Licence:            CC BY-NC-SA 4.0
 :Liens:              https://creativecommons.org/licenses/by-nc-sa/4.0/
 
+------------------------------------------------------------------------------------------
+
 Déscription
 ===========
 
@@ -16,6 +18,8 @@ Déscription
     
     * Temps écoulé entre deux référence de temps
     * Manipulation du format d'affichage des dates
+
+------------------------------------------------------------------------------------------
 
 Installation
 ============
@@ -28,6 +32,8 @@ Installation
     
 **N.B** : vous devez être Root / administrateur pour effectuer cette opération.
     
+------------------------------------------------------------------------------------------
+
 Arborescence du projet
 ======================
 
