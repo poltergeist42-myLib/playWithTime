@@ -1,6 +1,6 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
   <head>
@@ -36,7 +36,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
   </head>
-  <body role="document">
+  <body>
   
 
     <div class="document">
@@ -61,9 +61,9 @@
 </tr>
 <tr class="field-even field"><th class="field-name">documentation:</th><td class="field-body"><a class="reference external" href="https://poltergeist42-mylib.github.io/playWithTime/">https://poltergeist42-mylib.github.io/playWithTime/</a></td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Autheur:</th><td class="field-body"><a class="reference external" href="https://github.com/poltergeist42">Poltergeist42</a></td>
+<tr class="field-odd field"><th class="field-name">Auteur:</th><td class="field-body"><a class="reference external" href="https://github.com/poltergeist42">Poltergeist42</a></td>
 </tr>
-<tr class="field-even field"><th class="field-name">Version:</th><td class="field-body">20170913</td>
+<tr class="field-even field"><th class="field-name">Version:</th><td class="field-body">20170920</td>
 </tr>
 </tbody>
 </table>
@@ -159,195 +159,232 @@
 <dl class="class">
 <dt id="playWithTime_pac.playWithTime.C_PlayWithTime">
 <em class="property">class </em><code class="descclassname">playWithTime_pac.playWithTime.</code><code class="descname">C_PlayWithTime</code><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>Class permettant de manipuler des éléments de type duréé</p>
+<dd><p>Class permettant de manipuler des éléments de type durée</p>
 <dl class="method">
-<dt id="playWithTime_pac.playWithTime.C_PlayWithTime.f_getClkPrevNowDiff">
-<code class="descname">f_getClkPrevNowDiff</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime.f_getClkPrevNowDiff" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>Retourne un tuple avec &#8216;_v_ClkRefPrev&#8217;, &#8216;_v_ClkRefNow&#8217;
-et &#8216;_v_ClkDiff&#8217;</p>
+<dt id="playWithTime_pac.playWithTime.C_PlayWithTime.f_getClkDiff">
+<code class="descname">f_getClkDiff</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime.f_getClkDiff" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Retourne un tuple avec “_v_ClkPrev”, “_v_ClkNow”
+et “_v_ClkDiff”</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="playWithTime_pac.playWithTime.C_PlayWithTime.f_getClkRefDiff">
-<code class="descname">f_getClkRefDiff</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime.f_getClkRefDiff" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>Retourne &#8216;_v_clkDiff&#8217;</p>
+<dt id="playWithTime_pac.playWithTime.C_PlayWithTime.f_getClkNow">
+<code class="descname">f_getClkNow</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime.f_getClkNow" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Retourne “_v_clkNow”</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="playWithTime_pac.playWithTime.C_PlayWithTime.f_getClkRefNow">
-<code class="descname">f_getClkRefNow</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime.f_getClkRefNow" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>Retourne &#8216;_v_clkRefNow&#8217;</p>
+<dt id="playWithTime_pac.playWithTime.C_PlayWithTime.f_getClkPrev">
+<code class="descname">f_getClkPrev</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime.f_getClkPrev" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Retourne “_v_clkPrev”</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="playWithTime_pac.playWithTime.C_PlayWithTime.f_getClkRefPrev">
-<code class="descname">f_getClkRefPrev</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime.f_getClkRefPrev" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>Retourne &#8216;_v_clkRefPrev&#8217;</p>
+<dt id="playWithTime_pac.playWithTime.C_PlayWithTime.f_getCumulTime">
+<code class="descname">f_getCumulTime</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime.f_getCumulTime" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>retourne “_d_cumulTime”</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="playWithTime_pac.playWithTime.C_PlayWithTime.f_getEpochDiff">
+<code class="descname">f_getEpochDiff</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime.f_getEpochDiff" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Retourne “_v_epochDiff”</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="playWithTime_pac.playWithTime.C_PlayWithTime.f_getEpochNow">
+<code class="descname">f_getEpochNow</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime.f_getEpochNow" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Retourne “_v_epochNow”</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="playWithTime_pac.playWithTime.C_PlayWithTime.f_getEpochPrev">
+<code class="descname">f_getEpochPrev</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime.f_getEpochPrev" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Retourne “_v_epochPrev”</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="playWithTime_pac.playWithTime.C_PlayWithTime.f_getEpochPrevNowDiff">
 <code class="descname">f_getEpochPrevNowDiff</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime.f_getEpochPrevNowDiff" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>Retourne un tuple avec &#8216;_v_epochRefPrev&#8217;, &#8216;_v_epochRefNow&#8217;
-et &#8216;_v_epochDiff&#8217;</p>
+<dd><p>Retourne un tuple avec “_v_epochPrev”, “_v_epochNow”
+et “_v_epochDiff”</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="playWithTime_pac.playWithTime.C_PlayWithTime.f_getEpochRefDiff">
-<code class="descname">f_getEpochRefDiff</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime.f_getEpochRefDiff" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>Retourne &#8216;_v_epochDiff&#8217;</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="playWithTime_pac.playWithTime.C_PlayWithTime.f_getEpochRefNow">
-<code class="descname">f_getEpochRefNow</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime.f_getEpochRefNow" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>Retourne &#8216;_v_epochRefNow&#8217;</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="playWithTime_pac.playWithTime.C_PlayWithTime.f_getEpochRefPrev">
-<code class="descname">f_getEpochRefPrev</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime.f_getEpochRefPrev" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>Retourne &#8216;_v_epochRefPrev&#8217;</p>
+<dt id="playWithTime_pac.playWithTime.C_PlayWithTime.f_getFlag">
+<code class="descname">f_getFlag</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime.f_getFlag" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>retourne “_v_flag”</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="playWithTime_pac.playWithTime.C_PlayWithTime.f_getUnderstandingBaseTime">
 <code class="descname">f_getUnderstandingBaseTime</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime.f_getUnderstandingBaseTime" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>retourne &#8216;_v_understandingBaseTime&#8217;</p>
+<dd><p>retourne “_v_understandingBaseTime”</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="playWithTime_pac.playWithTime.C_PlayWithTime.f_getUnderstandingNow">
+<code class="descname">f_getUnderstandingNow</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime.f_getUnderstandingNow" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Retourne “_v_understandingNow”</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="playWithTime_pac.playWithTime.C_PlayWithTime.f_getUnderstandingPrev">
+<code class="descname">f_getUnderstandingPrev</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime.f_getUnderstandingPrev" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Retourne “_v_understandingPrev”</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="playWithTime_pac.playWithTime.C_PlayWithTime.f_getUnderstandingPrevNowDiff">
 <code class="descname">f_getUnderstandingPrevNowDiff</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime.f_getUnderstandingPrevNowDiff" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>Retourne un tuple avec &#8216;_v_UnderstandingRefPrev&#8217;, &#8216;_v_UnderstandingRefNow&#8217;
-et &#8216;_v_UnderstandingDiff&#8217;</p>
+<dd><p>Retourne un tuple avec “_v_UnderstandingPrev”, “_v_UnderstandingNow”
+et “_v_UnderstandingValue”</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="playWithTime_pac.playWithTime.C_PlayWithTime.f_getUnderstandingRefDiff">
-<code class="descname">f_getUnderstandingRefDiff</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime.f_getUnderstandingRefDiff" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>retourne &#8216;_v_understandingRefDiff&#8217;</p>
+<dt id="playWithTime_pac.playWithTime.C_PlayWithTime.f_getUnderstandingRound">
+<code class="descname">f_getUnderstandingRound</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime.f_getUnderstandingRound" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>retourne “_v_understandingRound”</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="playWithTime_pac.playWithTime.C_PlayWithTime.f_getUnderstandingRefNow">
-<code class="descname">f_getUnderstandingRefNow</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime.f_getUnderstandingRefNow" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>Retourne &#8216;_v_understandingRefNow&#8217;</p>
+<dt id="playWithTime_pac.playWithTime.C_PlayWithTime.f_getUnderstandingValue">
+<code class="descname">f_getUnderstandingValue</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime.f_getUnderstandingValue" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>retourne “_v_understandingValue”</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="playWithTime_pac.playWithTime.C_PlayWithTime.f_getUnderstandingRefPrev">
-<code class="descname">f_getUnderstandingRefPrev</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime.f_getUnderstandingRefPrev" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>Retourne &#8216;_v_understandingRefPrev&#8217;</p>
+<dt id="playWithTime_pac.playWithTime.C_PlayWithTime.f_setClkDiff">
+<code class="descname">f_setClkDiff</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime.f_setClkDiff" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Définit la variable  _v_clkDiff. c’est le résultat de 
+“_v_clkNow” - “_v_clkPrev”</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="playWithTime_pac.playWithTime.C_PlayWithTime.f_setClkFiFo">
 <code class="descname">f_setClkFiFo</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime.f_setClkFiFo" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>First_In, First_Out. Copie &#8216;_v_clkRefNow&#8217; dans &#8216;_v_clkRefPrev&#8217; et
-&#8216;_v_clkRefNow&#8217; prend une nouvelle valeur  (en temp CPU depuis le début du
+<dd><p>First_In, First_Out. Copie “_v_clkNow” dans “_v_clkPrev” et
+“_v_clkNow” prend une nouvelle valeur  (en temps CPU depuis le début du
 process). La différence entre entre Pev et Now est calculée automatiquement avant chaque mouvement.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="playWithTime_pac.playWithTime.C_PlayWithTime.f_setClkNow">
+<code class="descname">f_setClkNow</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime.f_setClkNow" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Définit la variable  “_v_clkNow”. C’est  la référence de temps
+la plus récente (en temps CPU depuis le début du process)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="playWithTime_pac.playWithTime.C_PlayWithTime.f_setClkPrev">
+<code class="descname">f_setClkPrev</code><span class="sig-paren">(</span><em>v_clkPrev=False</em><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime.f_setClkPrev" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Définit la variable  “_v_clkPrev”. C’est la référence de temps 
+la plus ancienne (en temp CPU depuis le début du process)</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="playWithTime_pac.playWithTime.C_PlayWithTime.f_setClkRAZ">
 <code class="descname">f_setClkRAZ</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime.f_setClkRAZ" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>Remet toutes les variables &#8216;Clk&#8217; à zéro</p>
+<dd><p>Remet toutes les variables “Clk” à zéro</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="playWithTime_pac.playWithTime.C_PlayWithTime.f_setClkRefDiff">
-<code class="descname">f_setClkRefDiff</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime.f_setClkRefDiff" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>Définit la variable  _v_clkRefDiff. c&#8217;est le resultat de 
-&#8216;_v_clkRefNow&#8217; - &#8216;_v_clkRefPrev&#8217;</p>
+<dt id="playWithTime_pac.playWithTime.C_PlayWithTime.f_setCumulTime">
+<code class="descname">f_setCumulTime</code><span class="sig-paren">(</span><em>v_value</em>, <em>v_key=None</em><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime.f_setCumulTime" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Permet d’additionner les valeurs de “v_value” dans 
+les clefs correspondantes (v_key).
+Si “v_key” n’est pas renseignée, la clef par défaut sera : “defaultCumulKey”</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="playWithTime_pac.playWithTime.C_PlayWithTime.f_setClkRefNow">
-<code class="descname">f_setClkRefNow</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime.f_setClkRefNow" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>Définit la variable  &#8216;_v_clkRefNow&#8217;. C&#8217;est  la référence de temps
-la plus récente (en temp CPU depuis le début du process)</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="playWithTime_pac.playWithTime.C_PlayWithTime.f_setClkRefPrev">
-<code class="descname">f_setClkRefPrev</code><span class="sig-paren">(</span><em>v_clkRefPrev=False</em><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime.f_setClkRefPrev" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>Définit la variable  &#8216;_v_clkRefPrev&#8217;. C&#8217;est la référence de temps 
-la plus anciennne (en temp CPU depuis le début du process)</p>
+<dt id="playWithTime_pac.playWithTime.C_PlayWithTime.f_setEpochDiff">
+<code class="descname">f_setEpochDiff</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime.f_setEpochDiff" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Définit la variable  _v_epochDiff. c’est le résultat de 
+“_v_epochNow” - “_v_epochPrev”</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="playWithTime_pac.playWithTime.C_PlayWithTime.f_setEpochFiFo">
 <code class="descname">f_setEpochFiFo</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime.f_setEpochFiFo" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>First_In, First_Out. Copie &#8216;_v_epochRefNow&#8217; dans &#8216;_v_epochRefPrev&#8217; et
-&#8216;_v_epochRefNow&#8217; prend une nouvelle valeur. La différence entre entre Pev et Now est calculée automatiquement avant chaque mouvement.</p>
+<dd><p>First_In, First_Out. Copie “_v_epochNow” dans “_v_epochPrev” et
+“_v_epochNow” prend une nouvelle valeur. La différence entre entre Pev et Now est calculée automatiquement avant chaque mouvement.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="playWithTime_pac.playWithTime.C_PlayWithTime.f_setEpochNow">
+<code class="descname">f_setEpochNow</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime.f_setEpochNow" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Définit la variable  “_v_epochNow”. C’est  la référence de temps
+la plus récente</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="playWithTime_pac.playWithTime.C_PlayWithTime.f_setEpochPrev">
+<code class="descname">f_setEpochPrev</code><span class="sig-paren">(</span><em>v_epochPrev=False</em><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime.f_setEpochPrev" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Définit la variable  “_v_epochPrev”. C’est la référence de temps 
+la plus ancienne</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="playWithTime_pac.playWithTime.C_PlayWithTime.f_setEpochRAZ">
 <code class="descname">f_setEpochRAZ</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime.f_setEpochRAZ" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>Remet toutes les variables &#8216;Epoch&#8217; à zéro</p>
+<dd><p>Remet toutes les variables “Epoch” à zéro</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="playWithTime_pac.playWithTime.C_PlayWithTime.f_setEpochRefDiff">
-<code class="descname">f_setEpochRefDiff</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime.f_setEpochRefDiff" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>Définit la variable  _v_epochDiff. c&#8217;est le resultat de 
-&#8216;_v_epochRefNow&#8217; - &#8216;_v_epochRefPrev&#8217;</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="playWithTime_pac.playWithTime.C_PlayWithTime.f_setEpochRefNow">
-<code class="descname">f_setEpochRefNow</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime.f_setEpochRefNow" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>Définit la variable  &#8216;_v_epochRefNow&#8217;. C&#8217;est  la référence de temps
-la plus récente</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="playWithTime_pac.playWithTime.C_PlayWithTime.f_setEpochRefPrev">
-<code class="descname">f_setEpochRefPrev</code><span class="sig-paren">(</span><em>v_epochRefPrev=False</em><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime.f_setEpochRefPrev" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>Définit la variable  &#8216;_v_epochRefPrev&#8217;. C&#8217;est la référence de temps 
-la plus anciennne</p>
+<dt id="playWithTime_pac.playWithTime.C_PlayWithTime.f_setFlag">
+<code class="descname">f_setFlag</code><span class="sig-paren">(</span><em>v_upDown</em><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime.f_setFlag" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>permet de “lever” ou “baisser” un drapeau (_v_flag)</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="playWithTime_pac.playWithTime.C_PlayWithTime.f_setUnderstandingBaseTime">
 <code class="descname">f_setUnderstandingBaseTime</code><span class="sig-paren">(</span><em>v_timeType=False</em><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime.f_setUnderstandingBaseTime" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>Définit la variable &#8216;_v_understandingBaseTime&#8217;&#8217; qui permet au méthode
-&#8216;understanding&#8217; d&#8217;utiliser une base de temps de type &#8216;epoch&#8217; ou clk&#8217;</p>
+<dd><p>Définit la variable “_v_understandingBaseTime&nbsp;» qui permet à la méthode
+“understanding” d’utiliser une base de temps de type “epoch” ou clk”.
+La valeur par défaut est «&nbsp;epoch&nbsp;».</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="playWithTime_pac.playWithTime.C_PlayWithTime.f_setUnderstandingFiFo">
 <code class="descname">f_setUnderstandingFiFo</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime.f_setUnderstandingFiFo" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>First_In, First_Out. Copie &#8216;_v_understandingRefNow&#8217; dans
-&#8216;_v_understandingRefPrev&#8217; et &#8216;_v_understandingRefNow&#8217; prend une nouvelle valeur. La différence entre entre Pev et Now est calculée automatiquement avant chaque mouvement.</p>
+<dd><p>First_In, First_Out. Copie “_v_understandingNow” dans
+“_v_understandingPrev” et “_v_understandingNow” prend une nouvelle valeur. La différence entre entre Pev et Now est calculée automatiquement avant chaque mouvement.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="playWithTime_pac.playWithTime.C_PlayWithTime.f_setUnderstandingNow">
+<code class="descname">f_setUnderstandingNow</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime.f_setUnderstandingNow" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Définit la variable “_v_understandingNow” dans un format compréhensible
+sous la forme : str( xxh xxm xxs )</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="playWithTime_pac.playWithTime.C_PlayWithTime.f_setUnderstandingPrev">
+<code class="descname">f_setUnderstandingPrev</code><span class="sig-paren">(</span><em>v_uPrev=False</em><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime.f_setUnderstandingPrev" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Définit la variable “_v_understandingPrev” dans un format compréhensible
+sous la forme : str( xxh xxm xxs )</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="playWithTime_pac.playWithTime.C_PlayWithTime.f_setUnderstandingRAZ">
 <code class="descname">f_setUnderstandingRAZ</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime.f_setUnderstandingRAZ" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>Remet toutes les variables &#8216;Understanding&#8217; à zéro (&#8220;&#8221;)</p>
+<dd><p>Remet toutes les variables “Understanding” à zéro («&nbsp;&nbsp;»)</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="playWithTime_pac.playWithTime.C_PlayWithTime.f_setUnderstandingRefDiff">
-<code class="descname">f_setUnderstandingRefDiff</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime.f_setUnderstandingRefDiff" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>Définit la variable &#8216;_v_understandingRefDiff&#8217; dans un format comprehensible
-sous la forme : str( xxh xxm xxs )</p>
+<dt id="playWithTime_pac.playWithTime.C_PlayWithTime.f_setUnderstandingRound">
+<code class="descname">f_setUnderstandingRound</code><span class="sig-paren">(</span><em>v_num=False</em><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime.f_setUnderstandingRound" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Définit la variable “_v_understandingRound” dans un format compréhensible
+sous la forme : str( xxh xxm xxs ). Cette variable est une valeur arrondie
+au quart d’heure près.</p>
+<p><strong>N.B</strong> : Si la différence de temps est comprise entre 15 et 20 minute, 
+l’arrondie sera soit 1 quart d’heure, soit 1 tier.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="playWithTime_pac.playWithTime.C_PlayWithTime.f_setUnderstandingRefNow">
-<code class="descname">f_setUnderstandingRefNow</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime.f_setUnderstandingRefNow" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>Définit la variable &#8216;_v_understandingRefNow&#8217; dans un format comprehensible
-sous la forme : str( xxh xxm xxs )</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="playWithTime_pac.playWithTime.C_PlayWithTime.f_setUnderstandingRefPrev">
-<code class="descname">f_setUnderstandingRefPrev</code><span class="sig-paren">(</span><em>v_uRefPrev=False</em><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime.f_setUnderstandingRefPrev" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>Définit la variable &#8216;_v_understandingRefPrev&#8217; dans un format comprehensible
+<dt id="playWithTime_pac.playWithTime.C_PlayWithTime.f_setUnderstandingValue">
+<code class="descname">f_setUnderstandingValue</code><span class="sig-paren">(</span><em>v_num=False</em><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithTime.C_PlayWithTime.f_setUnderstandingValue" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Définit la variable “_v_understandingValue” dans un format compréhensible
 sous la forme : str( xxh xxm xxs )</p>
 </dd></dl>
 
@@ -374,7 +411,7 @@ sous la forme : str( xxh xxm xxs )</p>
 </tr>
 <tr class="field-odd field"><th class="field-name">Autheur:</th><td class="field-body"><a class="reference external" href="https://github.com/poltergeist42">Poltergeist42</a></td>
 </tr>
-<tr class="field-even field"><th class="field-name">Version:</th><td class="field-body">20170909</td>
+<tr class="field-even field"><th class="field-name">Version:</th><td class="field-body">20170913</td>
 </tr>
 </tbody>
 </table>
@@ -472,11 +509,11 @@ sous la forme : str( xxh xxm xxs )</p>
 <dl class="class">
 <dt id="playWithTime_pac.playWithDate.C_PlayWithDate">
 <em class="property">class </em><code class="descclassname">playWithTime_pac.playWithDate.</code><code class="descname">C_PlayWithDate</code><a class="headerlink" href="#playWithTime_pac.playWithDate.C_PlayWithDate" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>Class permettant d&#8217;afficher et de manipuler les dates sous diférents format</p>
+<dd><p>Class permettant d’afficher et de manipuler les dates sous diférents format</p>
 <dl class="method">
 <dt id="playWithTime_pac.playWithDate.C_PlayWithDate.f_getDateItems">
 <code class="descname">f_getDateItems</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithDate.C_PlayWithDate.f_getDateItems" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>retourne les variables : &#8216;_v_yy&#8217;, &#8216;_v_mm&#8217;, &#8216;_v_dd&#8217;, &#8216;_v_month&#8217;, &#8216;_v_weekday&#8217;</p>
+<dd><p>retourne les variables : “_v_yy”, “_v_mm”, “_v_dd”, “_v_month”, “_v_weekday”</p>
 </dd></dl>
 
 <dl class="method">
@@ -488,13 +525,13 @@ sous la forme : str( xxh xxm xxs )</p>
 <dl class="method">
 <dt id="playWithTime_pac.playWithDate.C_PlayWithDate.f_getFrShortFormat">
 <code class="descname">f_getFrShortFormat</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithDate.C_PlayWithDate.f_getFrShortFormat" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>retourne &#8216;_v_frShortFormat&#8217;</p>
+<dd><p>retourne “_v_frShortFormat”</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="playWithTime_pac.playWithDate.C_PlayWithDate.f_getReverseShortFormat">
 <code class="descname">f_getReverseShortFormat</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithDate.C_PlayWithDate.f_getReverseShortFormat" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>retourne &#8216;_v_reverseShortFormat&#8217;</p>
+<dd><p>retourne “_v_reverseShortFormat”</p>
 </dd></dl>
 
 <dl class="method">
@@ -506,25 +543,25 @@ sous la forme : str( xxh xxm xxs )</p>
 <dl class="method">
 <dt id="playWithTime_pac.playWithDate.C_PlayWithDate.f_getUsShortFormat">
 <code class="descname">f_getUsShortFormat</code><span class="sig-paren">(</span><em>v_cutYear=False</em>, <em>v_spacer=False</em><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithDate.C_PlayWithDate.f_getUsShortFormat" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>retourne &#8216;_v_usShortFormat&#8217;</p>
+<dd><p>retourne “_v_usShortFormat”</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="playWithTime_pac.playWithDate.C_PlayWithDate.f_setDateItems">
 <code class="descname">f_setDateItems</code><span class="sig-paren">(</span><em>v_yy=False</em>, <em>v_mm=False</em>, <em>v_dd=False</em>, <em>v_month=False</em>, <em>v_weekday=False</em><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithDate.C_PlayWithDate.f_setDateItems" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>Permet de définir l&#8217;année, le mois (int et str) et le jour (int et str).
-Ces données sont placées dans les variables &#8216;_v_yy&#8217;, &#8216;_v_mm&#8217;, 
-&#8216;_v_dd&#8217;,&#8217;_v_month&#8217;,  &#8216;_v_weekday&#8217;</p>
-<p>Si l&#8217;un des argument n&#8217;est pas False, sa valeur sera utilisée pour définir
+<dd><p>Permet de définir l’année, le mois (int et str) et le jour (int et str).
+Ces données sont placées dans les variables “_v_yy”, “_v_mm”, 
+“_v_dd”,”_v_month”,  “_v_weekday”</p>
+<p>Si l’un des argument n’est pas False, sa valeur sera utilisée pour définir
 la variable équivalent.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="playWithTime_pac.playWithDate.C_PlayWithDate.f_setFrLongFormat">
 <code class="descname">f_setFrLongFormat</code><span class="sig-paren">(</span><em>v_wDay=False</em><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithDate.C_PlayWithDate.f_setFrLongFormat" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>Définit la variable &#8216;_v_frLongFormat&#8217;  sous forme développée de la date
+<dd><p>Définit la variable “_v_frLongFormat”  sous forme développée de la date
 au format Fr.
-Si &#8216;v_weekDay&#8217; est &#8216;True&#8217; le jour de la semaine sera ajouté devant la date
+Si “v_weekDay” est “True” le jour de la semaine sera ajouté devant la date
 ex :</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">v_wDay</span> <span class="o">=</span> <span class="kc">False</span>
 
@@ -541,12 +578,12 @@ ex :</p>
 <dt id="playWithTime_pac.playWithDate.C_PlayWithDate.f_setFrShortFormat">
 <code class="descname">f_setFrShortFormat</code><span class="sig-paren">(</span><em>v_cutYear=False</em>, <em>v_spacer=False</em><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithDate.C_PlayWithDate.f_setFrShortFormat" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><dl class="docutils">
-<dt>Permet de definir la variable &#8216;_v_frShortFormat&#8217; sous la forme d&#8217;une str :</dt>
-<dd>&#8216;DDMMYYYY&#8217;</dd>
+<dt>Permet de definir la variable “_v_frShortFormat” sous la forme d’une str :</dt>
+<dd>“DDMMYYYY”</dd>
 </dl>
 <ul class="simple">
-<li>Si l&#8217;argument &#8216;v_cutYear&#8217; est True, la date sera sur 2 digit</li>
-<li>Si l&#8217;argument &#8216;v_spacer&#8217; est utiliser, sa valeur sera utilisée
+<li>Si l’argument “v_cutYear” est True, la date sera sur 2 digit</li>
+<li>Si l’argument “v_spacer” est utiliser, sa valeur sera utilisée
 comme spérateur.</li>
 </ul>
 <p>ex :</p>
@@ -568,13 +605,13 @@ comme spérateur.</li>
 <dl class="method">
 <dt id="playWithTime_pac.playWithDate.C_PlayWithDate.f_setReverseShortFormat">
 <code class="descname">f_setReverseShortFormat</code><span class="sig-paren">(</span><em>v_cutYear=False</em>, <em>v_spacer=False</em><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithDate.C_PlayWithDate.f_setReverseShortFormat" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>Permet de definir la variable &#8216;_v_reverseShortFormat&#8217; sous la forme
-d&#8217;une str :</p>
+<dd><p>Permet de definir la variable “_v_reverseShortFormat” sous la forme
+d’une str :</p>
 <blockquote>
-<div>&#8216;YYYYMMDD&#8217;</div></blockquote>
+<div>“YYYYMMDD”</div></blockquote>
 <ul class="simple">
-<li>Si l&#8217;argument &#8216;v_cutYear&#8217; est True, la date sera sur 2 digit</li>
-<li>Si l&#8217;argument &#8216;v_spacer&#8217; est utiliser, sa valeur sera utilisée
+<li>Si l’argument “v_cutYear” est True, la date sera sur 2 digit</li>
+<li>Si l’argument “v_spacer” est utiliser, sa valeur sera utilisée
 comme spérateur.</li>
 </ul>
 <p>ex :</p>
@@ -596,9 +633,9 @@ comme spérateur.</li>
 <dl class="method">
 <dt id="playWithTime_pac.playWithDate.C_PlayWithDate.f_setUsLongFormat">
 <code class="descname">f_setUsLongFormat</code><span class="sig-paren">(</span><em>v_wDay=False</em><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithDate.C_PlayWithDate.f_setUsLongFormat" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>Définit la variable &#8216;_v_usLongFormat&#8217;  sous forme développée de la date
+<dd><p>Définit la variable “_v_usLongFormat”  sous forme développée de la date
 au format US.
-Si &#8216;v_weekDay&#8217; est &#8216;True&#8217; le jour de la semaine sera ajouté devant la date
+Si “v_weekDay” est “True” le jour de la semaine sera ajouté devant la date
 ex :</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">v_wDay</span> <span class="o">=</span> <span class="kc">False</span>
 
@@ -615,12 +652,12 @@ ex :</p>
 <dt id="playWithTime_pac.playWithDate.C_PlayWithDate.f_setUsShortFormat">
 <code class="descname">f_setUsShortFormat</code><span class="sig-paren">(</span><em>v_cutYear=False</em>, <em>v_spacer=False</em><span class="sig-paren">)</span><a class="headerlink" href="#playWithTime_pac.playWithDate.C_PlayWithDate.f_setUsShortFormat" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><dl class="docutils">
-<dt>Permet de definir la variable &#8216;_v_usShortFormat&#8217; sous la forme d&#8217;une str :</dt>
-<dd>&#8216;MMDDYYYY&#8217;</dd>
+<dt>Permet de definir la variable “_v_usShortFormat” sous la forme d’une str :</dt>
+<dd>“MMDDYYYY”</dd>
 </dl>
 <ul class="simple">
-<li>Si l&#8217;argument &#8216;v_cutYear&#8217; est True, la date sera sur 2 digit</li>
-<li>Si l&#8217;argument &#8216;v_spacer&#8217; est utiliser, sa valeur sera utilisée
+<li>Si l’argument “v_cutYear” est True, la date sera sur 2 digit</li>
+<li>Si l’argument “v_spacer” est utiliser, sa valeur sera utilisée
 comme spérateur.</li>
 </ul>
 <p>ex :</p>
@@ -703,7 +740,7 @@ comme spérateur.</li>
       &copy;2017, Poltergeist42.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |
