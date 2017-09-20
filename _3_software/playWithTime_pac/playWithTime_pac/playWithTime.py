@@ -11,7 +11,7 @@ Infos
     :dépôt GitHub:       https://github.com/poltergeist42-myLib/playWithTime.git
     :documentation:      https://poltergeist42-mylib.github.io/playWithTime/
     :Auteur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-    :Version:            20170919
+    :Version:            20170920
 
 ####
 
@@ -67,27 +67,58 @@ import time
 __all__ = ["C_PlayWithTime"]
 
 class C_PlayWithTime( object ) :
-    """ Class permettant de manipuler des éléments de type duréé """
+    """ Class permettant de manipuler des éléments de type durée """
     
     def __init__( self ) :
     
+        self._v_flag                    = "up"
+        self._d_cumulTime               = {}
+    
         ## Variables Epoch : utilisées par time.time()
-        self._v_epochPrev                = 0.0
-        self._v_epochNow                 = 0.0
-        self._v_epochDiff                   = 0.0
+        self._v_epochPrev               = 0.0
+        self._v_epochNow                = 0.0
+        self._v_epochDiff               = 0.0
         
         ## Variables Clock : utilisées par time.clock()
-        self._v_clkPrev                  = 0.0
-        self._v_clkNow                   = 0.0
-        self._v_clkDiff                     = 0.0
+        self._v_clkPrev                 = 0.0
+        self._v_clkNow                  = 0.0
+        self._v_clkDiff                 = 0.0
         
-        ## fomrat compréhensible des données
-        self._v_understandingBaseTime       = ""
-        self._v_understandingPrev        = ""
-        self._v_understandingNow         = ""
-        self._v_understandingDiff           = ""
-        self._v_understandingRound   = ""
+        ## format compréhensible des données
+        self._v_understandingBaseTime   = ""
+        self._v_understandingPrev       = ""
+        self._v_understandingNow        = ""
+        self._v_understandingValue      = ""
+        self._v_understandingRound      = ""
         
+
+    def f_setFlag( self, v_upDown ) :
+        """ permet de 'lever' ou 'baisser' un drapeau (_v_flag) """
+        if v_upDown :
+            self._v_flag = "up"
+        if (not v_upDown) or (v_upDow.lower() == "down") :
+            self._v_flag = "down"
+
+            
+    def f_getFlag( self ) :
+        """ retourne '_v_flag' """
+        return self._v_flag
+        
+        
+    def f_setCumulTime( self, v_value, v_key = None  ) :
+        """ Permet d'additionner les valeurs de 'v_value' dans 
+            les clefs correspondantes (v_key).
+            Si 'v_key' n'est pas renseignée, la clef par défaut sera : 'defaultCumulKey'
+        """
+        if not v_key :
+            v_key = "defaultCumulKey"
+            
+        self._d_cumulTime[v_key] += v_value
+        
+        
+    def f_getCumulTime( self ) : 
+        """ retourne '_d_cumulTime' """
+        return self._d_cumulTime
 
     def f_setEpochRAZ(self ) :
         """ Remet toutes les variables 'Epoch' à zéro """
@@ -98,12 +129,15 @@ class C_PlayWithTime( object ) :
         
     def f_setEpochPrev( self, v_epochPrev=False ) :
         """ Définit la variable  '_v_epochPrev'. C'est la référence de temps 
-            la plus anciennne
+            la plus ancienne
         """
-        if not v_epochPrev :
-            self._v_epochPrev = self.f_getEpochNow()
-        else :
-            self._v_epochPrev = v_epochPrev
+        if not self.f_getFlag() :
+            if not v_epochPrev :
+                self._v_epochPrev = self.f_getEpochNow()
+            else :
+                self._v_epochPrev = v_epochPrev
+                
+            self.f_setFlag( True )
         
         
     def f_getEpochPrev( self ) :
@@ -118,9 +152,12 @@ class C_PlayWithTime( object ) :
         """ Définit la variable  '_v_epochNow'. C'est  la référence de temps
             la plus récente
         """
-        self._v_epochNow = time.time()
-        if not self.f_getEpochPrev() :
-            self.f_setEpochPrev(self._v_epochNow)
+        if self.f_getFlag() :
+            self._v_epochNow = time.time()
+            if not self.f_getEpochPrev() :
+                self.f_setEpochPrev(self._v_epochNow)
+                
+            self.f_setFlag( False )
         
         
     def f_getEpochNow( self ) :
@@ -132,7 +169,7 @@ class C_PlayWithTime( object ) :
         
         
     def f_setEpochDiff( self ) :
-        """ Définit la variable  _v_epochDiff. c'est le resultat de 
+        """ Définit la variable  _v_epochDiff. c'est le résultat de 
             '_v_epochNow' - '_v_epochPrev'
         """
         self._v_epochDiff = self.f_getEpochNow()-self.f_getEpochPrev()
@@ -174,12 +211,15 @@ class C_PlayWithTime( object ) :
 
     def f_setClkPrev( self, v_clkPrev=False ) :
         """ Définit la variable  '_v_clkPrev'. C'est la référence de temps 
-            la plus anciennne (en temp CPU depuis le début du process)
+            la plus ancienne (en temp CPU depuis le début du process)
         """
-        if not v_clkPrev :
-            self._v_clkPrev = self.f_getClkNow()
-        else :
-            self._v_clkPrev = v_clkPrev
+        if not self.f_getFlag() :
+            if not v_clkPrev :
+                self._v_clkPrev = self.f_getClkNow()
+            else :
+                self._v_clkPrev = v_clkPrev
+                
+            self.f_setFlag( True )
         
         
     def f_getClkPrev( self ) :
@@ -192,9 +232,15 @@ class C_PlayWithTime( object ) :
         
     def f_setClkNow( self ) :
         """ Définit la variable  '_v_clkNow'. C'est  la référence de temps
-            la plus récente (en temp CPU depuis le début du process)
+            la plus récente (en temps CPU depuis le début du process)
         """
-        self._v_clkNow = time.time()
+        if self.f_getFlag() :
+            self._v_clkNow = time.time()
+            if not self.f_getClkPrev() :
+                self.f_setClkPrev(self._v_clkNow)
+                
+            self.f_setFlag( False )
+
  
         
     def f_getClkNow( self ) :
@@ -206,7 +252,7 @@ class C_PlayWithTime( object ) :
         
         
     def f_setClkDiff( self ) :
-        """ Définit la variable  _v_clkDiff. c'est le resultat de 
+        """ Définit la variable  _v_clkDiff. c'est le résultat de 
             '_v_clkNow' - '_v_clkPrev'
         """
         self._v_clkDiff = self.f_getClkNow()-self.f_getClkPrev()
@@ -222,14 +268,14 @@ class C_PlayWithTime( object ) :
         
     def f_setClkFiFo( self ) :
         """ First_In, First_Out. Copie '_v_clkNow' dans '_v_clkPrev' et
-            '_v_clkNow' prend une nouvelle valeur  (en temp CPU depuis le début du
+            '_v_clkNow' prend une nouvelle valeur  (en temps CPU depuis le début du
             process). La différence entre entre Pev et Now est calculée automatiquement avant chaque mouvement.
         """
         self.f_setClkDiff()
         self.f_setClkPrev( self.f_getClkNow() )
         self.f_setClkNow()
         
-    def f_getClkPrevNowDiff( self ) :
+    def f_getClkDiff( self ) :
         """ Retourne un tuple avec '_v_ClkPrev', '_v_ClkNow'
             et '_v_ClkDiff'
         """
@@ -244,7 +290,7 @@ class C_PlayWithTime( object ) :
         self._v_understandingBaseTime   = ""
         self._v_understandingPrev       = ""
         self._v_understandingNow        = ""
-        self._v_understandingDiff       = ""
+        self._v_understandingValue       = ""
         self._v_understandingRound  = ""
         
     def f_setUnderstandingBaseTime( self, v_timeType=False ) :
@@ -271,18 +317,20 @@ class C_PlayWithTime( object ) :
         
         
     def f_setUnderstandingPrev( self, v_uPrev=False ) :
-        """ Définit la variable '_v_understandingPrev' dans un format comprehensible
+        """ Définit la variable '_v_understandingPrev' dans un format compréhensible
             sous la forme : str( xxh xxm xxs )
         """
-        v_baseTime = self.f_getUnderstandingBaseTime()
-        v_evalSetFn = "self.f_set{}Prev".format( v_baseTime )
-        eval( v_evalSetFn )()
+        if not self.f_getFlag() :
+            v_baseTime = self.f_getUnderstandingBaseTime()
+            v_evalSetFn = "self.f_set{}Prev".format( v_baseTime )
+            eval( v_evalSetFn )()
+            
+            if not v_uPrev :
+                self._v_understandingPrev = self.f_getUnderstandingNow()
+            else :
+                self._v_understandingPrev = v_uPrev
         
-        if not v_uPrev :
-            self._v_understandingPrev = self.f_getUnderstandingNow()
-        else :
-            self._v_understandingPrev = v_uPrev
-        
+            self.f_setFlag( True )
         
     def f_getUnderstandingPrev( self ) :
         """ Retourne '_v_understandingPrev' """
@@ -293,15 +341,17 @@ class C_PlayWithTime( object ) :
         
         
     def f_setUnderstandingNow( self ) :
-        """ Définit la variable '_v_understandingNow' dans un format comprehensible
+        """ Définit la variable '_v_understandingNow' dans un format compréhensible
             sous la forme : str( xxh xxm xxs )
         """
-        v_baseTime = self.f_getUnderstandingBaseTime()
-        v_evalSetFn = "self.f_set{}Now".format( v_baseTime )
-        eval( v_evalSetFn )()
-        
-        self._v_understandingNow = time.strftime('%H:%M:%S')
+        if self.f_getFlag() :
+            v_baseTime = self.f_getUnderstandingBaseTime()
+            v_evalSetFn = "self.f_set{}Now".format( v_baseTime )
+            eval( v_evalSetFn )()
+            
+            self._v_understandingNow = time.strftime('%H:%M:%S')
  
+            self.f_setFlag( False )
             
     def f_getUnderstandingNow( self ) :
         """ Retourne '_v_understandingNow' """
@@ -311,21 +361,24 @@ class C_PlayWithTime( object ) :
         return self._v_understandingNow
     
     
-    def f_setUnderstandingDiff( self ) :
-        """ Définit la variable '_v_understandingDiff' dans un format comprehensible
+    def f_setUnderstandingValue( self, v_num=False ) :
+        """ Définit la variable '_v_understandingValue' dans un format compréhensible
             sous la forme : str( xxh xxm xxs )
         """
         v_DeltaFinal = ""
+        if not v_num :
+            v_baseTime = self.f_getUnderstandingBaseTime()
+            v_evalSetFn = "self.f_set{}Diff".format( v_baseTime )
+            eval( v_evalSetFn )()
+            
+            v_evalGetFn = "self.f_get{}Diff".format( v_baseTime )
+            v_num = eval( v_evalGetFn )()
         
-        v_baseTime = self.f_getUnderstandingBaseTime()
-        v_evalSetFn = "self.f_set{}Diff".format( v_baseTime )
-        eval( v_evalSetFn )()
-        
-        v_evalGetFn = "self.f_get{}Diff".format( v_baseTime )
-        v_uDiff = eval( v_evalGetFn )()
-        
+        v_IntH = v_num // 3600
+        v_ModH = v_num%3600
+        v_IntM = v_ModH // 60
+
         ## Formatage des heures
-        v_IntH = v_uDiff // 3600
         if v_IntH :
             v_toStr = str(v_IntH)
             if len( v_toStr ) < 2 :
@@ -336,8 +389,6 @@ class C_PlayWithTime( object ) :
             v_DeltaFinal = "00h "
             
         ## Formatage des minutes
-        v_ModH = v_uDiff%3600
-        v_IntM = v_ModH // 60
         if v_IntM :
             v_toStr = str(v_IntM)
             if len( v_toStr ) < 2 :
@@ -358,23 +409,24 @@ class C_PlayWithTime( object ) :
         else :
             v_DeltaFinal += "00s"
             
-        self._v_understandingDiff = v_DeltaFinal
+        self._v_understandingValue = v_DeltaFinal
     
     
-    def f_getUnderstandingDiff( self ) :
-        """ retourne '_v_understandingDiff' """
-        if not self._v_understandingDiff :
-            self.f_setUnderstandingDiff()
+    def f_getUnderstandingValue( self ) :
+        """ retourne '_v_understandingValue' """
+        if not self._v_understandingValue :
+            self.f_setUnderstandingValue()
             
-        return self._v_understandingDiff
+        return self._v_understandingValue
         
         
-    def f_setUnderstandingRound( self,  v_num=False) :
-        """ Définit la variable '_v_understandingRound' dans un format comprehensible
-            sous la forme : str( xxh xxm xxs ). Cette variable est une valeur arondie
+    def f_setUnderstandingRound( self,  v_num=False ) :
+        """ Définit la variable '_v_understandingRound' dans un format compréhensible
+            sous la forme : str( xxh xxm xxs ). Cette variable est une valeur arrondie
             au quart d'heure près.
-            **N.B : Si la différence de temps est comprise entre 15 et 20 minute, 
-            l'arondie sera soit 1 quart d'heure, soit 1 tier.
+            
+            **N.B** : Si la différence de temps est comprise entre 15 et 20 minute, 
+            l’arrondie sera soit 1 quart d'heure, soit 1 tier.
         """
         v_DeltaFinal = ""
         if not v_num :
@@ -389,15 +441,15 @@ class C_PlayWithTime( object ) :
         v_ModH = v_num%3600
         v_IntM = v_ModH // 60
         
-        if not v_IntH :
-            if (v_IntM < 20) and (v_IntM > 15) :
-                if v_ModH > 17.5 :
-                    v_DeltaFinal = "00h20m"
-                else :
-                    v_DeltaFinal = "00h15m"
+        # if not v_IntH :
+            # if (v_IntM < 20) and (v_IntM > 15) :
+                # if v_ModH > 17.5 :
+                    # v_DeltaFinal = "00h20m"
+                # else :
+                    # v_DeltaFinal = "00h15m"
         
-                self._v_understandingRound = v_DeltaFinal
-                break
+                # self._v_understandingRound = v_DeltaFinal
+                # break
         
         if v_IntM :
             if v_IntM <= 22.5 :
@@ -420,15 +472,26 @@ class C_PlayWithTime( object ) :
             else :
                 v_DeltaFinal = v_toStr + "h "
         else :
-            v_DeltaFinal = "00h "
+            if (v_IntM < 20) and (v_IntM > 15) :
+                if v_ModH > 17.5 :
+                    v_DeltaFinal = "00h20m"
+                    v_strM = False
+                else :
+                    v_DeltaFinal = "00h15m"
+                    v_strM = False
+            else :
+                v_DeltaFinal = "00h "
             
-        v_DeltaFinal += v_strM          
+        if v_strM :
+            v_DeltaFinal += v_strM
+            
         self._v_understandingRound = v_DeltaFinal
     
     
     def f_getUnderstandingRound( self ) :
         """ retourne '_v_understandingRound' """
         return self._v_understandingRound
+    
     
     def f_setUnderstandingFiFo( self ) :
         """ First_In, First_Out. Copie '_v_understandingNow' dans
@@ -438,25 +501,25 @@ class C_PlayWithTime( object ) :
         v_evalSetFn = "self.f_set{}FiFo".format( v_baseTime )
         eval( v_evalSetFn )()
         
-        self.f_setUnderstandingDiff()
+        self.f_setUnderstandingValue()
         self.f_setUnderstandingPrev( self.f_getUnderstandingNow() )
         self.f_setUnderstandingNow()
         
         
     def f_getUnderstandingPrevNowDiff( self ) :
         """ Retourne un tuple avec '_v_UnderstandingPrev', '_v_UnderstandingNow'
-            et '_v_UnderstandingDiff'
+            et '_v_UnderstandingValue'
         """
         return (self.f_getUnderstandingPrev(), 
                 self.f_getUnderstandingNow(),
-                self.f_getUnderstandingDiff()
+                self.f_getUnderstandingValue()
                 )
 
     
 ####
     
 def main() :
-    """ fonction principale, permtet de tester la librairie """
+    """ fonction principale, permet de tester la librairie """
     v_boucle = 3
     v_sleep = 1
     
@@ -482,7 +545,7 @@ def main() :
     print( "\nClk" )
     for i in range( v_boucle ) :
         ist.f_setClkFiFo()
-        for j in ist.f_getClkPrevNowDiff() :
+        for j in ist.f_getClkDiff() :
             print( j )
 
         print( "\n" )
