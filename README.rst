@@ -34,6 +34,17 @@ Installation
     
 ------------------------------------------------------------------------------------------
 
+Utilisation
+===========
+
+Pour pouvoir utiliser ce paquet depuis un script ou depuis votre interpréteur, vous devez
+saisir : ::
+
+    from playWithTime_pac.playWithTime import C_PlayWithTime
+    from playWithTime_pac.playWithDate import C_PlayWithDate
+
+------------------------------------------------------------------------------------------
+
 Arborescence du projet
 ======================
 

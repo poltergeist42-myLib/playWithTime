@@ -11,7 +11,7 @@ Infos
     :dépôt GitHub:       https://github.com/poltergeist42-myLib/playWithTime.git
     :documentation:      https://poltergeist42-mylib.github.io/playWithTime/
     :Auteur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-    :Version:            20170920
+    :Version:            20171017-dev
 
 ####
 
@@ -105,7 +105,7 @@ class C_PlayWithTime( object ) :
         return self._v_flag
         
         
-    def f_setCumulTime( self, v_value, v_key = None  ) :
+    def f_setCumulTime( self, v_value, v_key=None, v_subKey=None ) :
         """ Permet d'additionner les valeurs de 'v_value' dans 
             les clefs correspondantes (v_key).
             Si 'v_key' n'est pas renseignée, la clef par défaut sera : 'defaultCumulKey'
@@ -113,8 +113,12 @@ class C_PlayWithTime( object ) :
         if not v_key :
             v_key = "defaultCumulKey"
             
-        self._d_cumulTime[v_key] += v_value
-        
+        if not v_subKey :
+            self._d_cumulTime[v_key] += v_value
+        else :
+            self._d_cumulTime[v_key] = {}
+            self._d_cumulTime[v_key][v_subKey] += v_value
+            
         
     def f_getCumulTime( self ) : 
         """ retourne '_d_cumulTime' """
@@ -192,7 +196,7 @@ class C_PlayWithTime( object ) :
         self.f_setEpochNow()
         
         
-    def f_getEpochPrevNowDiff( self ) :
+    def f_getEpochData( self ) :
         """ Retourne un tuple avec '_v_epochPrev', '_v_epochNow'
             et '_v_epochDiff'
         """
@@ -290,8 +294,8 @@ class C_PlayWithTime( object ) :
         self._v_understandingBaseTime   = ""
         self._v_understandingPrev       = ""
         self._v_understandingNow        = ""
-        self._v_understandingValue       = ""
-        self._v_understandingRound  = ""
+        self._v_understandingValue      = ""
+        self._v_understandingRound      = ""
         
     def f_setUnderstandingBaseTime( self, v_timeType=False ) :
         """ Définit la variable '_v_understandingBaseTime'' qui permet à la méthode
@@ -319,6 +323,8 @@ class C_PlayWithTime( object ) :
     def f_setUnderstandingPrev( self, v_uPrev=False ) :
         """ Définit la variable '_v_understandingPrev' dans un format compréhensible
             sous la forme : str( xxh xxm xxs )
+            
+            N.B : Aucune action ne serat effectuée si self.f_setFlag est Vrai
         """
         if not self.f_getFlag() :
             v_baseTime = self.f_getUnderstandingBaseTime()
@@ -343,6 +349,8 @@ class C_PlayWithTime( object ) :
     def f_setUnderstandingNow( self ) :
         """ Définit la variable '_v_understandingNow' dans un format compréhensible
             sous la forme : str( xxh xxm xxs )
+            
+            N.B : Aucune action ne serat effectuée si self.f_setFlag et FAUX
         """
         if self.f_getFlag() :
             v_baseTime = self.f_getUnderstandingBaseTime()
@@ -501,12 +509,11 @@ class C_PlayWithTime( object ) :
         v_evalSetFn = "self.f_set{}FiFo".format( v_baseTime )
         eval( v_evalSetFn )()
         
-        self.f_setUnderstandingValue()
         self.f_setUnderstandingPrev( self.f_getUnderstandingNow() )
         self.f_setUnderstandingNow()
         
         
-    def f_getUnderstandingPrevNowDiff( self ) :
+    def f_getUnderstandingData( self ) :
         """ Retourne un tuple avec '_v_UnderstandingPrev', '_v_UnderstandingNow'
             et '_v_UnderstandingValue'
         """
@@ -515,6 +522,18 @@ class C_PlayWithTime( object ) :
                 self.f_getUnderstandingValue()
                 )
 
+                
+    def f_getUnderstandingDataBrut( self ) :
+        """ Retourne toutes les données de 'undestanding' sous la forme d'un tuple """
+        v_baseTime = self.f_getUnderstandingBaseTime()
+        eval("self.f_set{}Diff".format( v_baseTime ))()
+        v_evalGetFn = "self.f_get{}Diff".format( v_baseTime )
+        v_diff = eval( v_evalGetFn )()
+        
+        return (    self.f_getUnderstandingPrev(),
+                    self.f_getUnderstandingNow(),
+                    v_diff
+                )
     
 ####
     
@@ -532,7 +551,7 @@ def main() :
     print( "\nEpoch" )
     for i in range( v_boucle ) :
         ist.f_setEpochFiFo()
-        for j in ist.f_getEpochPrevNowDiff() :
+        for j in ist.f_getEpochData() :
             print( j )
             
         print( "\n" )
@@ -558,7 +577,7 @@ def main() :
     print( "\nUnderstanding" )
     for i in range( v_boucle ) :
         ist.f_setUnderstandingFiFo()
-        for j in ist.f_getUnderstandingPrevNowDiff() :
+        for j in ist.f_getUnderstandingData() :
             print( j )
             
         print( "\n" )
