@@ -11,7 +11,7 @@ Infos
     :dépôt GitHub:       https://github.com/poltergeist42-myLib/playWithTime.git
     :documentation:      https://poltergeist42-mylib.github.io/playWithTime/
     :Auteur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-    :Version:            20171017-dev
+    :Version:            20171020-dev
 
 ####
 
@@ -72,6 +72,7 @@ class C_PlayWithTime( object ) :
     def __init__( self ) :
     
         self._v_flag                    = "up"
+        self._v_cumulValue              = 0
         self._d_cumulTime               = {}
     
         ## Variables Epoch : utilisées par time.time()
@@ -110,14 +111,15 @@ class C_PlayWithTime( object ) :
             les clefs correspondantes (v_key).
             Si 'v_key' n'est pas renseignée, la clef par défaut sera : 'defaultCumulKey'
         """
+        self._v_cumulValue += value 
         if not v_key :
             v_key = "defaultCumulKey"
             
         if not v_subKey :
-            self._d_cumulTime[v_key] += v_value
+            self._d_cumulTime[v_key] = self._v_cumulValue
         else :
             self._d_cumulTime[v_key] = {}
-            self._d_cumulTime[v_key][v_subKey] += v_value
+            self._d_cumulTime[v_key][v_subKey] = self._v_cumulValue
             
         
     def f_getCumulTime( self ) : 
