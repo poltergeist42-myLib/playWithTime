@@ -7,7 +7,7 @@
     * Manipulation du format d'affichage des dates (C_PlayWithDate)
 """
 
-__version__= "20171018"
+__version__= "20171020-dev"
 
 from playWithTime_pac.playWithTime import C_PlayWithTime
 from playWithTime_pac.playWithDate import C_PlayWithDate

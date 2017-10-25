@@ -11,7 +11,7 @@ Infos
     :dépôt GitHub:       https://github.com/poltergeist42-myLib/playWithTime.git
     :documentation:      https://poltergeist42-mylib.github.io/playWithTime/
     :Auteur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-    :Version:            20171020-dev
+    :Version:            20171025-dev
 
 ####
 
@@ -64,7 +64,7 @@ Liste de Lib
 
 import time
 
-__all__ = ["C_PlayWithTime"]
+__all__ = ["C_PlayWithTime", "C_Pwt_Epoch", "C_Pwt_Clk", "C_Pwt_U"]
 
 class C_PlayWithTime( object ) :
     """ Class permettant de manipuler des éléments de type durée """
@@ -74,30 +74,24 @@ class C_PlayWithTime( object ) :
         self._v_flag                    = "up"
         self._v_cumulValue              = 0
         self._d_cumulTime               = {}
-    
-        ## Variables Epoch : utilisées par time.time()
-        self._v_epochPrev               = 0.0
-        self._v_epochNow                = 0.0
-        self._v_epochDiff               = 0.0
-        
-        ## Variables Clock : utilisées par time.clock()
-        self._v_clkPrev                 = 0.0
-        self._v_clkNow                  = 0.0
-        self._v_clkDiff                 = 0.0
-        
-        ## format compréhensible des données
-        self._v_understandingBaseTime   = ""
-        self._v_understandingPrev       = ""
-        self._v_understandingNow        = ""
-        self._v_understandingValue      = ""
-        self._v_understandingRound      = ""
+        self._v_diff                    = 0.0
+        self._v_prev                    = 0.0
+        self._v_now                     = 0.0
+
+
+    def f_raz(self ) :
+        """ Remet toutes les variables 'Epoch' à zéro """
+        self._v_prev   = 0.0
+        self._v_now    = 0.0
+        self._v_diff   = 0.0
+        self.f_setFlag("up")
         
 
     def f_setFlag( self, v_upDown ) :
         """ permet de 'lever' ou 'baisser' un drapeau (_v_flag) """
         if v_upDown :
             self._v_flag = "up"
-        if (not v_upDown) or (v_upDow.lower() == "down") :
+        if (not v_upDown) or (v_upDown.lower() == "down") :
             self._v_flag = "down"
 
             
@@ -111,7 +105,7 @@ class C_PlayWithTime( object ) :
             les clefs correspondantes (v_key).
             Si 'v_key' n'est pas renseignée, la clef par défaut sera : 'defaultCumulKey'
         """
-        self._v_cumulValue += value 
+        self._v_cumulValue += v_value 
         if not v_key :
             v_key = "defaultCumulKey"
             
@@ -126,67 +120,66 @@ class C_PlayWithTime( object ) :
         """ retourne '_d_cumulTime' """
         return self._d_cumulTime
 
-    def f_setEpochRAZ(self ) :
-        """ Remet toutes les variables 'Epoch' à zéro """
-        self._v_epochPrev   = 0.0
-        self._v_epochNow    = 0.0
-        self._v_epochDiff   = 0.0
+        
+    def f_setDiff( self, v_now, v_prev ) :
+        """ Définit la variable  _v_diff. c'est le résultat de 
+            'v_now' - 'v_prev'
+        """
+        self._v_diff =  v_now, v_prev
+
+        
+    def f_getDiff( self ) :
+        """ Retourne '_v_diff' """
+        if not self._v_diff :
+            self.f_setDiff()
+            
+        return self._v_diff
+        
+####
+
+class C_Pwt_Epoch( C_PlayWithTime ) :
+    def __init__( self ) :
+        """ Init des varriables 'epoch' """
+        super().__init__()
         
         
     def f_setEpochPrev( self, v_epochPrev=False ) :
-        """ Définit la variable  '_v_epochPrev'. C'est la référence de temps 
-            la plus ancienne
+        """ Définit la variable  '_v_prev'. C'est la référence de temps la plus ancienne.
         """
         if not self.f_getFlag() :
             if not v_epochPrev :
-                self._v_epochPrev = self.f_getEpochNow()
+                self._v_prev = self.f_getEpochNow()
             else :
-                self._v_epochPrev = v_epochPrev
+                self._v_prev = v_epochPrev
                 
             self.f_setFlag( True )
         
         
     def f_getEpochPrev( self ) :
-        """ Retourne '_v_epochPrev' """
-        if not self._v_epochPrev :
+        """ Retourne '_v_prev' """
+        if not self._v_prev :
             self.f_setEpochPrev()
             
-        return self._v_epochPrev
+        return self._v_prev
         
         
     def f_setEpochNow( self ) :
-        """ Définit la variable  '_v_epochNow'. C'est  la référence de temps
-            la plus récente
+        """ Définit la variable  '_v_now'. C'est  la référence de temps la plus récente.
         """
         if self.f_getFlag() :
-            self._v_epochNow = time.time()
+            self._v_now = time.time()
             if not self.f_getEpochPrev() :
-                self.f_setEpochPrev(self._v_epochNow)
+                self.f_setEpochPrev(self._v_now)
                 
             self.f_setFlag( False )
         
         
     def f_getEpochNow( self ) :
-        """ Retourne '_v_epochNow' """
-        if not self._v_epochNow :
+        """ Retourne '_v_now' """
+        if not self._v_now :
             self.f_setEpochNow()
             
-        return self._v_epochNow
-        
-        
-    def f_setEpochDiff( self ) :
-        """ Définit la variable  _v_epochDiff. c'est le résultat de 
-            '_v_epochNow' - '_v_epochPrev'
-        """
-        self._v_epochDiff = self.f_getEpochNow()-self.f_getEpochPrev()
-        
-        
-    def f_getEpochDiff( self ) :
-        """ Retourne '_v_epochDiff' """
-        if not self._v_epochDiff :
-            self.f_setEpochDiff()
-            
-        return self._v_epochDiff
+        return self._v_now
         
         
     def f_setEpochFiFo( self ) :
@@ -204,50 +197,47 @@ class C_PlayWithTime( object ) :
         """
         return (self.f_getEpochPrev(), 
                 self.f_getEpochNow(),
-                self.f_getEpochDiff()
+                self.f_getDiff()
                 )
 
-                
-    def f_setClkRAZ(self ) :
-        """ Remet toutes les variables 'Clk' à zéro """
-        self._v_clkPrev = 0.0
-        self._v_clkNow  = 0.0
-        self._v_clfDiff = 0.0
-        
+####
+
+class C_Pwt_Clk( C_PlayWithTime ) :
+    def __init__( self ) :
+        """ Init des varriables 'clk' """
+        super().__init__()
+    
 
     def f_setClkPrev( self, v_clkPrev=False ) :
-        """ Définit la variable  '_v_clkPrev'. C'est la référence de temps 
-            la plus ancienne (en temp CPU depuis le début du process)
+        """ Définit la variable  '_v_prev'. C'est la référence de temps la plus ancienne.
         """
         if not self.f_getFlag() :
-            if not v_clkPrev :
-                self._v_clkPrev = self.f_getClkNow()
+            if not v_prev :
+                self._v_prev = self.f_getClkNow()
             else :
-                self._v_clkPrev = v_clkPrev
+                self._v_prev = v_clkPrev
                 
             self.f_setFlag( True )
         
         
     def f_getClkPrev( self ) :
-        """ Retourne '_v_clkPrev' """
-        if not self._v_clkPrev :
+        """ Retourne '_v_prev' """
+        if not self._v_prev :
             self.f_setClkPrev()
             
-        return self._v_clkPrev
+        return self._v_prev
         
         
     def f_setClkNow( self ) :
-        """ Définit la variable  '_v_clkNow'. C'est  la référence de temps
-            la plus récente (en temps CPU depuis le début du process)
+        """ Définit la variable  '_v_now'. C'est  la référence de temps la plus récente.
         """
         if self.f_getFlag() :
-            self._v_clkNow = time.time()
+            self._v_clkNow = time.clock()
             if not self.f_getClkPrev() :
                 self.f_setClkPrev(self._v_clkNow)
                 
             self.f_setFlag( False )
-
- 
+        
         
     def f_getClkNow( self ) :
         """ Retourne '_v_clkNow' """
@@ -257,47 +247,48 @@ class C_PlayWithTime( object ) :
         return self._v_clkNow
         
         
-    def f_setClkDiff( self ) :
-        """ Définit la variable  _v_clkDiff. c'est le résultat de 
-            '_v_clkNow' - '_v_clkPrev'
-        """
-        self._v_clkDiff = self.f_getClkNow()-self.f_getClkPrev()
-        
-        
-    def f_getClkDiff( self ) :
-        """ Retourne '_v_clkDiff' """
-        if not self._v_clkDiff :
-            self.f_setClkDiff()
-            
-        return self._v_clkDiff
-        
-        
     def f_setClkFiFo( self ) :
         """ First_In, First_Out. Copie '_v_clkNow' dans '_v_clkPrev' et
-            '_v_clkNow' prend une nouvelle valeur  (en temps CPU depuis le début du
-            process). La différence entre entre Pev et Now est calculée automatiquement avant chaque mouvement.
+            '_v_clkNow' prend une nouvelle valeur. La différence entre entre Pev et Now est calculée automatiquement avant chaque mouvement.
         """
         self.f_setClkDiff()
         self.f_setClkPrev( self.f_getClkNow() )
         self.f_setClkNow()
         
-    def f_getClkDiff( self ) :
-        """ Retourne un tuple avec '_v_ClkPrev', '_v_ClkNow'
-            et '_v_ClkDiff'
+        
+    def f_getClkData( self ) :
+        """ Retourne un tuple avec '_v_clkPrev', '_v_clkNow'
+            et '_v_clkDiff'
         """
         return (self.f_getClkPrev(), 
                 self.f_getClkNow(),
                 self.f_getClkDiff()
                 )
+
+####
+
+class C_Pwt_U( C_PlayWithTime ) :
+    def __init__( self ) :
+        """ Init des varriables 'U' (Understanding) """
+        super().__init__()
         
+        ## format compréhensible des données
+        self._v_understandingBaseTime   = ""
+        self._v_understandingPrev       = ""
+        self._v_understandingNow        = ""
+        self._v_understandingValue      = ""
+        self._v_understandingRound      = ""
         
-    def f_setUnderstandingRAZ( self ) :
+
+    def f_raz( self ) :
         """ Remet toutes les variables 'Understanding' à zéro ("") """
         self._v_understandingBaseTime   = ""
         self._v_understandingPrev       = ""
         self._v_understandingNow        = ""
         self._v_understandingValue      = ""
         self._v_understandingRound      = ""
+        self.f_setFlag("up")
+        
         
     def f_setUnderstandingBaseTime( self, v_timeType=False ) :
         """ Définit la variable '_v_understandingBaseTime'' qui permet à la méthode
@@ -340,6 +331,7 @@ class C_PlayWithTime( object ) :
         
             self.f_setFlag( True )
         
+        
     def f_getUnderstandingPrev( self ) :
         """ Retourne '_v_understandingPrev' """
         if not self._v_understandingPrev :
@@ -362,6 +354,7 @@ class C_PlayWithTime( object ) :
             self._v_understandingNow = time.strftime('%H:%M:%S')
  
             self.f_setFlag( False )
+            
             
     def f_getUnderstandingNow( self ) :
         """ Retourne '_v_understandingNow' """
@@ -438,7 +431,8 @@ class C_PlayWithTime( object ) :
             **N.B** : Si la différence de temps est comprise entre 15 et 20 minute, 
             l’arrondie sera soit 1 quart d'heure, soit 1 tier.
         """
-        v_DeltaFinal = ""
+        v_DeltaFinal    = ""
+        v_strM          = False
         if not v_num :
             v_baseTime = self.f_getUnderstandingBaseTime()
             v_evalSetFn = "self.f_set{}Diff".format( v_baseTime )
@@ -536,7 +530,7 @@ class C_PlayWithTime( object ) :
                     self.f_getUnderstandingNow(),
                     v_diff
                 )
-    
+                
 ####
     
 def main() :
@@ -544,46 +538,57 @@ def main() :
     v_boucle = 3
     v_sleep = 1
     
-    ist=C_PlayWithTime()
+    # ist=C_PlayWithTime()
     
-    ist.f_setEpochRAZ()
-    ist.f_setClkRAZ()
-    ist.f_setUnderstandingRAZ()
+    # ist.f_setEpochRAZ()
+    # ist.f_setClkRAZ()
+    # ist.f_setUnderstandingRAZ()
     
-    print( "\nEpoch" )
-    for i in range( v_boucle ) :
-        ist.f_setEpochFiFo()
-        for j in ist.f_getEpochData() :
-            print( j )
+    # print( "\nEpoch" )
+    # for i in range( v_boucle ) :
+        # ist.f_setEpochFiFo()
+        # for j in ist.f_getEpochData() :
+            # print( j )
             
-        print( "\n" )
-        time.sleep( v_sleep )
-            
-    ist.f_setEpochRAZ()
-    ist.f_setClkRAZ()
-    ist.f_setUnderstandingRAZ()
+        # print( "\n" )
+        # time.sleep( v_sleep )
+          
+    # del(ist)
     
-    print( "\nClk" )
-    for i in range( v_boucle ) :
-        ist.f_setClkFiFo()
-        for j in ist.f_getClkDiff() :
-            print( j )
+    
+    # ist=C_PlayWithTime()
+          
+    # ist.f_setEpochRAZ()
+    # ist.f_setClkRAZ()
+    # ist.f_setUnderstandingRAZ()
+    
+    # print( "\nClk" )
+    # for i in range( v_boucle ) :
+        # ist.f_setClkFiFo()
+        # for j in ist.f_getClkData() :
+            # print( j )
 
-        print( "\n" )
-        time.sleep( v_sleep )
-        
-    ist.f_setEpochRAZ()
-    ist.f_setClkRAZ()
-    ist.f_setUnderstandingRAZ()
+        # print( "\n" )
+        # time.sleep( v_sleep )
+
+    # del(ist)
     
-    print( "\nUnderstanding" )
-    for i in range( v_boucle ) :
-        ist.f_setUnderstandingFiFo()
-        for j in ist.f_getUnderstandingData() :
-            print( j )
+    
+    # ist=C_PlayWithTime()
+        
+    # ist.f_setEpochRAZ()
+    # ist.f_setClkRAZ()
+    # ist.f_setUnderstandingRAZ()
+    
+    # print( "\nUnderstanding" )
+    # for i in range( v_boucle ) :
+        # ist.f_setUnderstandingFiFo()
+        # # for j in ist.f_getUnderstandingData() :
+        # for j in ist.f_getUnderstandingDataBrut() :
+            # print( j )
             
-        print( "\n" )
-        time.sleep( v_sleep )
+        # print( "\n" )
+        # time.sleep( v_sleep )
     
 if __name__ == '__main__':
     main()
