@@ -11,7 +11,7 @@ Infos
     :dépôt GitHub:       https://github.com/poltergeist42-myLib/playWithTime.git
     :documentation:      https://poltergeist42-mylib.github.io/playWithTime/
     :Auteur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-    :Version:            20171025-dev
+    :Version:            20171031-dev
 
 ####
 
@@ -61,32 +61,44 @@ Liste de Lib
     * time
 
 """
-
 import time
 
-__all__ = ["C_PlayWithTime", "C_Pwt_Epoch", "C_Pwt_Clk", "C_Pwt_U"]
+## DBG, à supprimer après la mise au point
+from devchk_pac.devchk import C_DebugMsg as dbg
+
+__all__ = ["C_PlayWithTime", "C_Pwt_Clk", "C_Pwt_U"]
 
 class C_PlayWithTime( object ) :
-    """ Class permettant de manipuler des éléments de type durée """
+    """ Class permettant de manipuler des éléments de type durée 
     
-    def __init__( self ) :
+        **N.B** : Le format par défaut est 'Epoch'
+    """
+    
+    def __init__( self, v_mode = "epoch" ) :
+    
+        self._v_mode                    = v_mode
     
         self._v_flag                    = "up"
-        self._v_cumulValue              = 0
+        self._v_cumulValue              = 0.0
         self._d_cumulTime               = {}
         self._v_diff                    = 0.0
         self._v_prev                    = 0.0
         self._v_now                     = 0.0
 
 
+    # @dbg()
     def f_raz(self ) :
-        """ Remet toutes les variables 'Epoch' à zéro """
-        self._v_prev   = 0.0
-        self._v_now    = 0.0
-        self._v_diff   = 0.0
+        """ Remet toutes les variables à zéro """
+        self._v_prev        = 0.0
+        self._v_now         = 0.0
+        self._v_diff        = 0.0
+        self._v_cumulValue  = 0.0
+        self._d_cumulTime   = {}
+
         self.f_setFlag("up")
         
 
+    # @dbg()
     def f_setFlag( self, v_upDown ) :
         """ permet de 'lever' ou 'baisser' un drapeau (_v_flag) """
         if v_upDown :
@@ -95,11 +107,13 @@ class C_PlayWithTime( object ) :
             self._v_flag = "down"
 
             
+    # @dbg()
     def f_getFlag( self ) :
         """ retourne '_v_flag' """
         return self._v_flag
         
         
+    @dbg()
     def f_setCumulTime( self, v_value, v_key=None, v_subKey=None ) :
         """ Permet d'additionner les valeurs de 'v_value' dans 
             les clefs correspondantes (v_key).
@@ -116,154 +130,85 @@ class C_PlayWithTime( object ) :
             self._d_cumulTime[v_key][v_subKey] = self._v_cumulValue
             
         
+    @dbg()
     def f_getCumulTime( self ) : 
         """ retourne '_d_cumulTime' """
         return self._d_cumulTime
 
         
-    def f_setDiff( self, v_now, v_prev ) :
+    @dbg()
+    def f_setDiff( self, v_prev, v_now  ) :
         """ Définit la variable  _v_diff. c'est le résultat de 
-            'v_now' - 'v_prev'
+            'v_prev' - 'v_now'
         """
-        self._v_diff =  v_now, v_prev
+        self._v_diff =  v_now - v_prev
 
         
+    @dbg()
     def f_getDiff( self ) :
         """ Retourne '_v_diff' """
-        if not self._v_diff :
-            self.f_setDiff()
-            
         return self._v_diff
         
-####
-
-class C_Pwt_Epoch( C_PlayWithTime ) :
-    def __init__( self ) :
-        """ Init des varriables 'epoch' """
-        super().__init__()
         
-        
-    def f_setEpochPrev( self, v_epochPrev=False ) :
+    @dbg()
+    def f_setPrev( self, v_prev ) :
         """ Définit la variable  '_v_prev'. C'est la référence de temps la plus ancienne.
         """
-        if not self.f_getFlag() :
-            if not v_epochPrev :
-                self._v_prev = self.f_getEpochNow()
-            else :
-                self._v_prev = v_epochPrev
-                
-            self.f_setFlag( True )
+        if self.f_getFlag() == "down" :
+            self._v_prev = v_prev
+            self.f_setFlag( "up" )
         
         
-    def f_getEpochPrev( self ) :
+    @dbg()
+    def f_getPrev( self ) :
         """ Retourne '_v_prev' """
-        if not self._v_prev :
-            self.f_setEpochPrev()
-            
         return self._v_prev
         
         
-    def f_setEpochNow( self ) :
+    # @dbg()
+    def f_setNow( self ) :
         """ Définit la variable  '_v_now'. C'est  la référence de temps la plus récente.
         """
-        if self.f_getFlag() :
-            self._v_now = time.time()
-            if not self.f_getEpochPrev() :
-                self.f_setEpochPrev(self._v_now)
+        if self.f_getFlag() == "up" :
+            if self._v_mode == "epoch" :
+                self._v_now = time.time()
+            elif self._v_mode == "clk" :
+                self._v_now = time.clock()
                 
-            self.f_setFlag( False )
+            self.f_setFlag( "down" )
+                
+            if not self.f_getPrev() :
+                self.f_setPrev(self._v_now)
+                
         
         
-    def f_getEpochNow( self ) :
+    @dbg()
+    def f_getNow( self ) :
         """ Retourne '_v_now' """
-        if not self._v_now :
-            self.f_setEpochNow()
-            
         return self._v_now
         
         
-    def f_setEpochFiFo( self ) :
-        """ First_In, First_Out. Copie '_v_epochNow' dans '_v_epochPrev' et
-            '_v_epochNow' prend une nouvelle valeur. La différence entre entre Pev et Now est calculée automatiquement avant chaque mouvement.
+    # @dbg()
+    def f_setFiFo( self ) :
+        """ First_In, First_Out. Copie '_v_ow' dans '_v_prev' et
+            '_v_now' prend une nouvelle valeur. La différence entre Pev et Now est calculée automatiquement avant chaque mouvement.
         """
-        self.f_setEpochDiff()
-        self.f_setEpochPrev( self.f_getEpochNow() )
-        self.f_setEpochNow()
+       self.f_setPrev( self.f_getNow() )
+        self.f_setNow()
+        v_p, v_n, _ = self.f_getData()
+        self.f_setDiff(v_p, v_n)
         
         
-    def f_getEpochData( self ) :
-        """ Retourne un tuple avec '_v_epochPrev', '_v_epochNow'
-            et '_v_epochDiff'
+    @dbg()
+    def f_getData( self ) :
+        """ Retourne un tuple avec '_v_prev', '_v_now'
+            et '_v_diff'
         """
-        return (self.f_getEpochPrev(), 
-                self.f_getEpochNow(),
+        return (self.f_getPrev(), 
+                self.f_getNow(),
                 self.f_getDiff()
                 )
 
-####
-
-class C_Pwt_Clk( C_PlayWithTime ) :
-    def __init__( self ) :
-        """ Init des varriables 'clk' """
-        super().__init__()
-    
-
-    def f_setClkPrev( self, v_clkPrev=False ) :
-        """ Définit la variable  '_v_prev'. C'est la référence de temps la plus ancienne.
-        """
-        if not self.f_getFlag() :
-            if not v_prev :
-                self._v_prev = self.f_getClkNow()
-            else :
-                self._v_prev = v_clkPrev
-                
-            self.f_setFlag( True )
-        
-        
-    def f_getClkPrev( self ) :
-        """ Retourne '_v_prev' """
-        if not self._v_prev :
-            self.f_setClkPrev()
-            
-        return self._v_prev
-        
-        
-    def f_setClkNow( self ) :
-        """ Définit la variable  '_v_now'. C'est  la référence de temps la plus récente.
-        """
-        if self.f_getFlag() :
-            self._v_clkNow = time.clock()
-            if not self.f_getClkPrev() :
-                self.f_setClkPrev(self._v_clkNow)
-                
-            self.f_setFlag( False )
-        
-        
-    def f_getClkNow( self ) :
-        """ Retourne '_v_clkNow' """
-        if not self._v_clkNow :
-            self.f_setClkNow()
-            
-        return self._v_clkNow
-        
-        
-    def f_setClkFiFo( self ) :
-        """ First_In, First_Out. Copie '_v_clkNow' dans '_v_clkPrev' et
-            '_v_clkNow' prend une nouvelle valeur. La différence entre entre Pev et Now est calculée automatiquement avant chaque mouvement.
-        """
-        self.f_setClkDiff()
-        self.f_setClkPrev( self.f_getClkNow() )
-        self.f_setClkNow()
-        
-        
-    def f_getClkData( self ) :
-        """ Retourne un tuple avec '_v_clkPrev', '_v_clkNow'
-            et '_v_clkDiff'
-        """
-        return (self.f_getClkPrev(), 
-                self.f_getClkNow(),
-                self.f_getClkDiff()
-                )
 
 ####
 
@@ -535,60 +480,27 @@ class C_Pwt_U( C_PlayWithTime ) :
     
 def main() :
     """ fonction principale, permet de tester la librairie """
-    v_boucle = 3
-    v_sleep = 1
     
-    # ist=C_PlayWithTime()
+    ## DBG, à supprimer après la mise au point
+    dbg(0)
     
-    # ist.f_setEpochRAZ()
-    # ist.f_setClkRAZ()
-    # ist.f_setUnderstandingRAZ()
-    
-    # print( "\nEpoch" )
-    # for i in range( v_boucle ) :
-        # ist.f_setEpochFiFo()
-        # for j in ist.f_getEpochData() :
-            # print( j )
-            
-        # print( "\n" )
-        # time.sleep( v_sleep )
-          
-    # del(ist)
+    ## Main
+    v_boucle = 5
+    v_sleep = 3
     
     
-    # ist=C_PlayWithTime()
-          
-    # ist.f_setEpochRAZ()
-    # ist.f_setClkRAZ()
-    # ist.f_setUnderstandingRAZ()
-    
-    # print( "\nClk" )
-    # for i in range( v_boucle ) :
-        # ist.f_setClkFiFo()
-        # for j in ist.f_getClkData() :
-            # print( j )
+    ## C_PlayWithTime
+    print( "\t## C_PlayWithTime ##\n" )
+    i_ist = C_PlayWithTime()
+    i_ist.f_raz()
+    for i in range(v_boucle) :
+        i_ist.f_setFiFo()
+        v_p, v_n, v_d = i_ist.f_getData()
+        i_ist.f_setCumulTime( v_d )
+        print( f"prev : {v_p}, now: {v_n} diff : {v_d}, cumul : {i_ist.f_getCumulTime()}" )
+        time.sleep( v_sleep )
 
-        # print( "\n" )
-        # time.sleep( v_sleep )
-
-    # del(ist)
-    
-    
-    # ist=C_PlayWithTime()
-        
-    # ist.f_setEpochRAZ()
-    # ist.f_setClkRAZ()
-    # ist.f_setUnderstandingRAZ()
-    
-    # print( "\nUnderstanding" )
-    # for i in range( v_boucle ) :
-        # ist.f_setUnderstandingFiFo()
-        # # for j in ist.f_getUnderstandingData() :
-        # for j in ist.f_getUnderstandingDataBrut() :
-            # print( j )
-            
-        # print( "\n" )
-        # time.sleep( v_sleep )
+    del(i_ist)
     
 if __name__ == '__main__':
     main()
