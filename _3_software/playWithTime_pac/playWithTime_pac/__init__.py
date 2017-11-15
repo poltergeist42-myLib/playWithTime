@@ -3,11 +3,12 @@
 
 """ Cette librairie pemet de manipuler des éléments de temps :
     
-    * Temps écoulé entre deux référence de temps (C_PlayWithTime)
+    * Temps écoulé entre deux référence de temps (C_PlayWithTime et C_Pwt_U)
     * Manipulation du format d'affichage des dates (C_PlayWithDate)
 """
 
-__version__= "20170920"
+__version__= "20171115"
 
-from .playWithTime import C_PlayWithTime
-from .playWithDate import C_PlayWithDate
+from playWithTime_pac.playWithTime import C_PlayWithTime
+from playWithTime_pac.playWithTime import C_Pwt_U
+from playWithTime_pac.playWithDate import C_PlayWithDate

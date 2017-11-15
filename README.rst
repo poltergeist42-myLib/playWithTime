@@ -18,20 +18,64 @@ Déscription
     
     * Temps écoulé entre deux référence de temps
     * Manipulation du format d'affichage des dates
+    
+    #. module playWithTime
+        Ce module comprend 2 Class :
+        
+        * C_PlayWithTime (Class mère) qui permet de manipuler le temps sous forme de
+          nombres décimaux. Ces décimaux peuvent être calculés soit en fonction de "Epoch"
+          soit en fonction de "Clock".
+          
+        * C_Pwt_U (Class fille) qui permet de manipuler le temps dans un format
+          compréhensible sous la forme xxHxxMxxS.
+          
+    #. module playWithDate
+        Ce module comprend 1 Class
+        
+        * C_PlayWithDate qui permet de manipuler la date sous différentes formes
 
 ------------------------------------------------------------------------------------------
 
 Installation
 ============
 
+**N.B** : vous devez être Root / administrateur pour effectuer cette opération.
+
  Depuis une invite de commande, ce placer dans le dossier "_3_software\playWithTime_pac" puis
  excuter la commande setup : ::
  
     cd .\_3_software\playWithTime_pac
     python setup.py install
+
+------------------------------------------------------------------------------------------
     
+Désinstallation
+===============
+
 **N.B** : vous devez être Root / administrateur pour effectuer cette opération.
+
+  Depuis une invite de command, executer la commande : ::
+  
+    pip list --format=columns
+        # permet d'afficher la liste des paquages installés
+        
+    pip uninstall [nom_du_paquet]
     
+    ex :
+    pip uninstall playwithtime-pac
+    
+------------------------------------------------------------------------------------------
+
+Utilisation
+===========
+
+Pour pouvoir utiliser ce paquet depuis un script ou depuis votre interpréteur, vous devez
+saisir : ::
+
+    from playWithTime_pac.playWithTime import C_PlayWithTime
+    from playWithTime_pac.playWithTime import C_Pwt_U
+    from playWithTime_pac.playWithDate import C_PlayWithDate
+
 ------------------------------------------------------------------------------------------
 
 Arborescence du projet
