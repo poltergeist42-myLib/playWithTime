@@ -77,12 +77,35 @@
 <li>Temps écoulé entre deux référence de temps</li>
 <li>Manipulation du format d’affichage des dates</li>
 </ul>
+<ol class="arabic simple">
+<li><dl class="first docutils">
+<dt>module playWithTime</dt>
+<dd>Ce module comprend 2 Class :<ul class="last">
+<li>C_PlayWithTime (Class mère) qui permet de manipuler le temps sous forme de
+nombres décimaux. Ces décimaux peuvent être calculés soit en fonction de «&nbsp;Epoch&nbsp;»
+soit en fonction de «&nbsp;Clock&nbsp;».</li>
+<li>C_Pwt_U (Class fille) qui permet de manipuler le temps dans un format
+compréhensible sous la forme xxHxxMxxS.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>module playWithDate</dt>
+<dd>Ce module comprend 1 Class<ul class="last">
+<li>C_PlayWithDate qui permet de manipuler la date sous différentes formes</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ol>
 </div></blockquote>
 </div></blockquote>
 </div>
 <hr class="docutils" />
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Lien permanent vers ce titre">¶</a></h2>
+<p><strong>N.B</strong> : vous devez être Root / administrateur pour effectuer cette opération.</p>
 <blockquote>
 <div><p>Depuis une invite de commande, ce placer dans le dossier «&nbsp;_3_softwareplayWithTime_pac&nbsp;» puis
 excuter la commande setup :</p>
@@ -91,7 +114,34 @@ excuter la commande setup :</p>
 </pre></div>
 </div>
 </div></blockquote>
+</div>
+<hr class="docutils" />
+<div class="section" id="desinstallation">
+<h2>Désinstallation<a class="headerlink" href="#desinstallation" title="Lien permanent vers ce titre">¶</a></h2>
 <p><strong>N.B</strong> : vous devez être Root / administrateur pour effectuer cette opération.</p>
+<blockquote>
+<div><p>Depuis une invite de command, executer la commande :</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="nb">list</span> <span class="o">--</span><span class="nb">format</span><span class="o">=</span><span class="n">columns</span>
+    <span class="c1"># permet d&#39;afficher la liste des paquages installés</span>
+
+<span class="n">pip</span> <span class="n">uninstall</span> <span class="p">[</span><span class="n">nom_du_paquet</span><span class="p">]</span>
+
+<span class="n">ex</span> <span class="p">:</span>
+<span class="n">pip</span> <span class="n">uninstall</span> <span class="n">playwithtime</span><span class="o">-</span><span class="n">pac</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<hr class="docutils" />
+<div class="section" id="utilisation">
+<h2>Utilisation<a class="headerlink" href="#utilisation" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Pour pouvoir utiliser ce paquet depuis un script ou depuis votre interpréteur, vous devez
+saisir :</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">playWithTime_pac.playWithTime</span> <span class="k">import</span> <span class="n">C_PlayWithTime</span>
+<span class="kn">from</span> <span class="nn">playWithTime_pac.playWithTime</span> <span class="k">import</span> <span class="n">C_Pwt_U</span>
+<span class="kn">from</span> <span class="nn">playWithTime_pac.playWithDate</span> <span class="k">import</span> <span class="n">C_PlayWithDate</span>
+</pre></div>
+</div>
 </div>
 <hr class="docutils" />
 <div class="section" id="arborescence-du-projet">
@@ -135,6 +185,8 @@ depuis GitHub.</p>
 <li><a class="reference internal" href="#informations-generales-playwithtime">Informations générales playWithTime</a><ul>
 <li><a class="reference internal" href="#description">Déscription</a></li>
 <li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#desinstallation">Désinstallation</a></li>
+<li><a class="reference internal" href="#utilisation">Utilisation</a></li>
 <li><a class="reference internal" href="#arborescence-du-projet">Arborescence du projet</a></li>
 </ul>
 </li>
