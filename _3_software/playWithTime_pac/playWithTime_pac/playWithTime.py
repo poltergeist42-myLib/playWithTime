@@ -11,7 +11,7 @@ Infos
     :dépôt GitHub:       https://github.com/poltergeist42-myLib/playWithTime.git
     :documentation:      https://poltergeist42-mylib.github.io/playWithTime/
     :Auteur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-    :Version:            20171031-dev
+    :Version:            20171115
 
 ####
 
@@ -64,9 +64,9 @@ Liste de Lib
 import time
 
 ## DBG, à supprimer après la mise au point
-from devchk_pac.devchk import C_DebugMsg as dbg
+# from devchk_pac.devchk import C_DebugMsg as dbg
 
-__all__ = ["C_PlayWithTime", "C_Pwt_Clk", "C_Pwt_U"]
+__all__ = ["C_PlayWithTime", "C_Pwt_U"]
 
 class C_PlayWithTime( object ) :
     """ Class permettant de manipuler des éléments de type durée 
@@ -113,7 +113,7 @@ class C_PlayWithTime( object ) :
         return self._v_flag
         
         
-    @dbg()
+    # @dbg()
     def f_setCumulTime( self, v_value, v_key=None, v_subKey=None ) :
         """ Permet d'additionner les valeurs de 'v_value' dans 
             les clefs correspondantes (v_key).
@@ -130,13 +130,13 @@ class C_PlayWithTime( object ) :
             self._d_cumulTime[v_key][v_subKey] = self._v_cumulValue
             
         
-    @dbg()
+    # @dbg()
     def f_getCumulTime( self ) : 
         """ retourne '_d_cumulTime' """
         return self._d_cumulTime
 
         
-    @dbg()
+    # @dbg()
     def f_setDiff( self, v_prev, v_now  ) :
         """ Définit la variable  _v_diff. c'est le résultat de 
             'v_prev' - 'v_now'
@@ -144,13 +144,13 @@ class C_PlayWithTime( object ) :
         self._v_diff =  v_now - v_prev
 
         
-    @dbg()
+    # @dbg()
     def f_getDiff( self ) :
         """ Retourne '_v_diff' """
         return self._v_diff
         
         
-    @dbg()
+    # @dbg()
     def f_setPrev( self, v_prev ) :
         """ Définit la variable  '_v_prev'. C'est la référence de temps la plus ancienne.
         """
@@ -159,7 +159,7 @@ class C_PlayWithTime( object ) :
             self.f_setFlag( "up" )
         
         
-    @dbg()
+    # @dbg()
     def f_getPrev( self ) :
         """ Retourne '_v_prev' """
         return self._v_prev
@@ -181,8 +181,7 @@ class C_PlayWithTime( object ) :
                 self.f_setPrev(self._v_now)
                 
         
-        
-    @dbg()
+    # @dbg()
     def f_getNow( self ) :
         """ Retourne '_v_now' """
         return self._v_now
@@ -193,13 +192,13 @@ class C_PlayWithTime( object ) :
         """ First_In, First_Out. Copie '_v_ow' dans '_v_prev' et
             '_v_now' prend une nouvelle valeur. La différence entre Pev et Now est calculée automatiquement avant chaque mouvement.
         """
-       self.f_setPrev( self.f_getNow() )
+        self.f_setPrev( self.f_getNow() )
         self.f_setNow()
         v_p, v_n, _ = self.f_getData()
         self.f_setDiff(v_p, v_n)
         
         
-    @dbg()
+    # @dbg()
     def f_getData( self ) :
         """ Retourne un tuple avec '_v_prev', '_v_now'
             et '_v_diff'
@@ -218,109 +217,91 @@ class C_Pwt_U( C_PlayWithTime ) :
         super().__init__()
         
         ## format compréhensible des données
-        self._v_understandingBaseTime   = ""
-        self._v_understandingPrev       = ""
-        self._v_understandingNow        = ""
-        self._v_understandingValue      = ""
-        self._v_understandingRound      = ""
+        self._v_uFlag       = "up"
+        self._v_uPrev       = ""
+        self._v_uNow        = ""
+        self._v_uValue      = ""
+        self._v_uRound      = ""
         
 
     def f_raz( self ) :
         """ Remet toutes les variables 'Understanding' à zéro ("") """
-        self._v_understandingBaseTime   = ""
-        self._v_understandingPrev       = ""
-        self._v_understandingNow        = ""
-        self._v_understandingValue      = ""
-        self._v_understandingRound      = ""
-        self.f_setFlag("up")
+        super().f_raz()
+        self._v_uPrev       = ""
+        self._v_uNow        = ""
+        self._v_uValue      = ""
+        self._v_uRound      = ""
         
-        
-    def f_setUnderstandingBaseTime( self, v_timeType=False ) :
-        """ Définit la variable '_v_understandingBaseTime'' qui permet à la méthode
-            'understanding' d'utiliser une base de temps de type 'epoch' ou clk'.
-            La valeur par défaut est "epoch".
-        """
-        if not v_timeType :
-            v_timeType = "epoch"
-        
-        v_timeType = v_timeType.lower()
-        if v_timeType == "epoch" :
-            self._v_understandingBaseTime = "Epoch"
-        elif v_timeType == "clk" :
-            self._v_understandingBaseTime = "Clk"
-        
+    # @dbg()
+    def f_setFlagU( self, v_upDown ) :
+        """ permet de 'lever' ou 'baisser' un drapeau (_v_flag) """
+        if v_upDown :
+            self._v_uFlag = "up"
+        if (not v_upDown) or (v_upDown.lower() == "down") :
+            self._v_uFlag = "down"
+
             
-    def f_getUnderstandingBaseTime( self ) :
-        """ retourne '_v_understandingBaseTime' """
-        if not self._v_understandingBaseTime :
-            self.f_setUnderstandingBaseTime()
-            
-        return self._v_understandingBaseTime
+    # @dbg()
+    def f_getFlagU( self ) :
+        """ retourne '_v_flag' """
+        return self._v_uFlag
+
         
         
-    def f_setUnderstandingPrev( self, v_uPrev=False ) :
-        """ Définit la variable '_v_understandingPrev' dans un format compréhensible
+    # @dbg()
+    def f_setPrevU( self, v_uPrev, v_prev=False  ) :
+        """ Définit la variable '_v_uPrev' dans un format compréhensible
             sous la forme : str( xxh xxm xxs )
             
             N.B : Aucune action ne serat effectuée si self.f_setFlag est Vrai
         """
-        if not self.f_getFlag() :
-            v_baseTime = self.f_getUnderstandingBaseTime()
-            v_evalSetFn = "self.f_set{}Prev".format( v_baseTime )
-            eval( v_evalSetFn )()
-            
-            if not v_uPrev :
-                self._v_understandingPrev = self.f_getUnderstandingNow()
-            else :
-                self._v_understandingPrev = v_uPrev
-        
-            self.f_setFlag( True )
+        if self.f_getFlagU() == "down" :
+            if  v_prev :
+                self.f_setPrev(v_prev)
+                
+            self._v_uPrev = v_uPrev
+            self.f_setFlagU( "up" )
         
         
-    def f_getUnderstandingPrev( self ) :
-        """ Retourne '_v_understandingPrev' """
-        if not self._v_understandingPrev :
-            self.f_setUnderstandingPrev()
-            
-        return self._v_understandingPrev
+    # @dbg()
+    def f_getPrevU( self ) :
+        """ Retourne '_v_uPrev' """
+        return self._v_uPrev
         
         
-    def f_setUnderstandingNow( self ) :
-        """ Définit la variable '_v_understandingNow' dans un format compréhensible
+    # @dbg()
+    def f_setNowU( self ) :
+        """ Définit la variable '_v_uNow' dans un format compréhensible
             sous la forme : str( xxh xxm xxs )
             
             N.B : Aucune action ne serat effectuée si self.f_setFlag et FAUX
         """
-        if self.f_getFlag() :
-            v_baseTime = self.f_getUnderstandingBaseTime()
-            v_evalSetFn = "self.f_set{}Now".format( v_baseTime )
-            eval( v_evalSetFn )()
+        if self.f_getFlagU() == "up" :
+            self.f_setNow()
+            self._v_uNow = time.strftime('%H:%M:%S')
             
-            self._v_understandingNow = time.strftime('%H:%M:%S')
- 
-            self.f_setFlag( False )
+            self.f_setFlagU( "down" )
+            
+            if not self.f_getPrevU() :
+                self.f_setPrevU( self._v_uNow )
+                
             
             
-    def f_getUnderstandingNow( self ) :
-        """ Retourne '_v_understandingNow' """
-        if not self._v_understandingNow :
-            self.f_setUnderstandingNow
-            
-        return self._v_understandingNow
+    # @dbg()
+    def f_getNowU( self ) :
+        """ Retourne '_v_Now' et '_v_uNow' """
+        return self._v_uNow, self._v_now
     
     
-    def f_setUnderstandingValue( self, v_num=False ) :
-        """ Définit la variable '_v_understandingValue' dans un format compréhensible
+    # @dbg()
+    def f_setValue( self, v_num=False ) :
+        """ Définit la variable '_v_uValue' dans un format compréhensible
             sous la forme : str( xxh xxm xxs )
         """
         v_DeltaFinal = ""
         if not v_num :
-            v_baseTime = self.f_getUnderstandingBaseTime()
-            v_evalSetFn = "self.f_set{}Diff".format( v_baseTime )
-            eval( v_evalSetFn )()
-            
-            v_evalGetFn = "self.f_get{}Diff".format( v_baseTime )
-            v_num = eval( v_evalGetFn )()
+            # self.f_setDiff()
+            v_num = self.f_getDiff()
         
         v_IntH = v_num // 3600
         v_ModH = v_num%3600
@@ -349,56 +330,41 @@ class C_Pwt_U( C_PlayWithTime ) :
         ## Formatage des secondes
         v_RestS = v_ModH % 60
         if v_RestS :
-            v_toStr = str(v_RestS)
+            v_toStr = str(round(v_RestS))
             if len( v_toStr ) < 2 :
                 v_DeltaFinal += '0' + v_toStr + "s"
             else :
-                v_DeltaFinal += str(v_RestS) + "s"
+                v_DeltaFinal += v_toStr + "s"
         else :
             v_DeltaFinal += "00s"
             
-        self._v_understandingValue = v_DeltaFinal
+        self._v_uValue = v_DeltaFinal
     
     
-    def f_getUnderstandingValue( self ) :
-        """ retourne '_v_understandingValue' """
-        if not self._v_understandingValue :
-            self.f_setUnderstandingValue()
-            
-        return self._v_understandingValue
+    # @dbg()
+    def f_getValue( self ) :
+        """ retourne '_v_uValue' """
+        return self._v_uValue
         
         
-    def f_setUnderstandingRound( self,  v_num=False ) :
-        """ Définit la variable '_v_understandingRound' dans un format compréhensible
+    # @dbg()
+    def f_setRound( self,  v_num=False ) :
+        """ Définit la variable '_v_uRound' dans un format compréhensible
             sous la forme : str( xxh xxm xxs ). Cette variable est une valeur arrondie
             au quart d'heure près.
             
             **N.B** : Si la différence de temps est comprise entre 15 et 20 minute, 
-            l’arrondie sera soit 1 quart d'heure, soit 1 tier.
+            l’arrondie sera soit 1 quart d'heure, soit 1 tiers.
         """
         v_DeltaFinal    = ""
         v_strM          = False
         if not v_num :
-            v_baseTime = self.f_getUnderstandingBaseTime()
-            v_evalSetFn = "self.f_set{}Diff".format( v_baseTime )
-            eval( v_evalSetFn )()
-            
-            v_evalGetFn = "self.f_get{}Diff".format( v_baseTime )
-            v_num = eval( v_evalGetFn )()
+            # self.f_setDiff()
+            v_num = self.f_getDiff()
         
         v_IntH = v_num // 3600
         v_ModH = v_num%3600
         v_IntM = v_ModH // 60
-        
-        # if not v_IntH :
-            # if (v_IntM < 20) and (v_IntM > 15) :
-                # if v_ModH > 17.5 :
-                    # v_DeltaFinal = "00h20m"
-                # else :
-                    # v_DeltaFinal = "00h15m"
-        
-                # self._v_understandingRound = v_DeltaFinal
-                # break
         
         if v_IntM :
             if v_IntM <= 22.5 :
@@ -408,7 +374,7 @@ class C_Pwt_U( C_PlayWithTime ) :
                 v_strM = "30m"
             
             elif (v_IntM >= 37.5) and (v_IntM <= 52.5) :
-                v_IntM = "45m"
+                v_strM = "45m"
                 
             elif v_IntM >= 52.5 :
                 v_strM  = "00m"
@@ -434,59 +400,59 @@ class C_Pwt_U( C_PlayWithTime ) :
         if v_strM :
             v_DeltaFinal += v_strM
             
-        self._v_understandingRound = v_DeltaFinal
+        self._v_uRound = v_DeltaFinal
     
     
-    def f_getUnderstandingRound( self ) :
-        """ retourne '_v_understandingRound' """
-        return self._v_understandingRound
+    # @dbg()
+    def f_getRound( self ) :
+        """ retourne '_v_uRound' """
+        return self._v_uRound
     
     
-    def f_setUnderstandingFiFo( self ) :
-        """ First_In, First_Out. Copie '_v_understandingNow' dans
-            '_v_understandingPrev' et '_v_understandingNow' prend une nouvelle valeur. La différence entre entre Pev et Now est calculée automatiquement avant chaque mouvement.
+    # @dbg()
+    def f_setFiFoU( self ) :
+        """ First_In, First_Out. Copie '_v_uNow' dans
+            '_v_uPrev' et '_v_uNow' prend une nouvelle valeur. La différence entre entre Pev et Now est calculée automatiquement avant chaque mouvement.
         """
-        v_baseTime = self.f_getUnderstandingBaseTime()
-        v_evalSetFn = "self.f_set{}FiFo".format( v_baseTime )
-        eval( v_evalSetFn )()
+        v_uNow, v_now = self.f_getNowU()
+        self.f_setPrevU( v_uNow, v_now )
+        self.f_setNowU()
+        v_p, v_n, _ = self.f_getDataBrut()
+        self.f_setDiff( v_p, v_n )
         
-        self.f_setUnderstandingPrev( self.f_getUnderstandingNow() )
-        self.f_setUnderstandingNow()
         
-        
-    def f_getUnderstandingData( self ) :
-        """ Retourne un tuple avec '_v_UnderstandingPrev', '_v_UnderstandingNow'
-            et '_v_UnderstandingValue'
+    # @dbg()
+    def f_getDataU( self ) :
+        """ Retourne un tuple avec '_v_UPrev', '_v_UNow'
+            et '_v_UValue'
         """
-        return (self.f_getUnderstandingPrev(), 
-                self.f_getUnderstandingNow(),
-                self.f_getUnderstandingValue()
+        return (self.f_getPrevU(), 
+                self.f_getNowU(),
+                self.f_getValue(),
+                self.f_getRound()
                 )
 
                 
-    def f_getUnderstandingDataBrut( self ) :
+    # @dbg()
+    def f_getDataBrut( self ) :
         """ Retourne toutes les données de 'undestanding' sous la forme d'un tuple """
-        v_baseTime = self.f_getUnderstandingBaseTime()
-        eval("self.f_set{}Diff".format( v_baseTime ))()
-        v_evalGetFn = "self.f_get{}Diff".format( v_baseTime )
-        v_diff = eval( v_evalGetFn )()
-        
-        return (    self.f_getUnderstandingPrev(),
-                    self.f_getUnderstandingNow(),
-                    v_diff
-                )
-                
+        return  super().f_getData()
+
+       
 ####
     
 def main() :
     """ fonction principale, permet de tester la librairie """
     
     ## DBG, à supprimer après la mise au point
-    dbg(0)
+    # dbg(1)
     
     ## Main
-    v_boucle = 5
-    v_sleep = 3
+    v_boucle = 3
+    v_sleep = 0.5
+
+    v_boucleU = 3
+    v_sleepU = 1
     
     
     ## C_PlayWithTime
@@ -501,6 +467,40 @@ def main() :
         time.sleep( v_sleep )
 
     del(i_ist)
+    
+    print( "\n\t## C_Pwt_U ##" )
+    u= C_Pwt_U()
+    u.f_raz()
+    for i in range(v_boucleU) :
+        u.f_setFiFoU()
+        _, _, v_d = u.f_getDataBrut()
+        u.f_setCumulTime( v_d )
+        u.f_setValue( u.f_getCumulTime()["defaultCumulKey"])
+        u.f_setRound( u.f_getCumulTime()["defaultCumulKey"])
+        v_p, v_n, v_v, v_r = u.f_getDataU()
+        print( f"prev : {v_p}, now: {v_n[0]} diff : {v_d}, val : {v_v}, r : {v_r}" )
+        time.sleep( v_sleepU )
+
+    u.f_setRound( 4500 )
+    print( f"h+m15 : {u.f_getRound()}" )
+
+    u.f_setRound( 5400 )
+    print( f"h+m30 : {u.f_getRound()}" )
+
+    u.f_setRound( 6300 )
+    print( f"h+m45 : {u.f_getRound()}" )
+
+    u.f_setRound( 7200 )
+    print( f"h2 : {u.f_getRound()}" )
+
+    u.f_setRound( 8100 )
+    print( f"h2+m15 : {u.f_getRound()}" )
+
+    u.f_setRound( 40500 )
+    print( f"h11+m15 : {u.f_getRound()}" )
+
+    del( u )
+
     
 if __name__ == '__main__':
     main()
